@@ -1,4 +1,4 @@
-# winecellar
+# winecellar-ui
 
 ## Project setup
 ```
