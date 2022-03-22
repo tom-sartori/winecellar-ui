@@ -8,6 +8,11 @@
           <router-link to="/home">Accueil</router-link>
         </li>
 
+        <!--  Mur -->
+        <li>
+          <router-link to="/mur">Mur</router-link>
+        </li>
+
         <!--  Admin part. -->
         <li v-if="showAdminBoard">
           <router-link to="/admin">Administration</router-link>

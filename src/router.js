@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router"
 import HomeItem from "./components/Home.vue"
 import LoginItem from "./components/Login.vue"
 import RegisterItem from "./components/Register.vue"
+import MurItem from "./components/Mur.vue"
 
 // lazy-loaded
 const Profile = () => import("./components/Profile")
@@ -14,6 +15,11 @@ const routes = [
         path: "/",
         name: "home",
         component: HomeItem,
+    },
+    {
+        path: "/mur",
+        name: "mur",
+        component: MurItem,
     },
     {
         path: "/home",
@@ -53,7 +59,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home']
+    const publicPages = ['/login', '/register', '/home', '/mur']
     const authRequired = !publicPages.includes(to.path)
     const loggedIn = localStorage.getItem('user')
 
