@@ -13,6 +13,12 @@
           <router-link to="/mur">Mur</router-link>
         </li>
 
+        <!--  Cave -->
+        <li v-if="currentUser">
+          <router-link to="/cave">Cave</router-link>
+        </li>
+
+
         <!--  Admin part. -->
         <li v-if="showAdminBoard">
           <router-link to="/admin">Administration</router-link>

@@ -2,7 +2,9 @@ import { createWebHistory, createRouter } from "vue-router"
 import HomeItem from "./components/Home.vue"
 import LoginItem from "./components/Login.vue"
 import RegisterItem from "./components/Register.vue"
+
 import MurItem from "./components/Mur.vue"
+import CaveView from "./views/Cave.vue"
 
 // lazy-loaded
 const Profile = () => import("./components/Profile")
@@ -20,6 +22,11 @@ const routes = [
         path: "/mur",
         name: "mur",
         component: MurItem,
+    },
+    {
+        path: "/cave",
+        name: "cave",
+        component: CaveView,
     },
     {
         path: "/home",

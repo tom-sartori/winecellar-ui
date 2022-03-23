@@ -38,7 +38,8 @@ module.exports = {
         PARAM: {
             ID: '/id/:id',
             NAME: '/name/:name',
-            EMAIL: 'email/:email'
+            EMAIL: '/email/:email',
+            CAVE_ID: '/cave-id/:id'
         },
         IMAGE: {
             MUR_IMAGE_PATH: '/mur-image'
