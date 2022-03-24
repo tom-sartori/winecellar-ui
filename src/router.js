@@ -3,9 +3,9 @@ import HomeItem from "./components/Home.vue"
 import LoginItem from "./components/Login.vue"
 import RegisterItem from "./components/Register.vue"
 
-import MurItem from "./components/Mur.vue"
 import CaveView from "./views/Cave.vue"
 import BouteilleView from "./views/Bouteille"
+import MurVue from "./views/Mur"
 
 // lazy-loaded
 const Profile = () => import("./components/Profile")
@@ -22,7 +22,7 @@ const routes = [
     {
         path: "/mur",
         name: "mur",
-        component: MurItem,
+        component: MurVue,
     },
     {
         path: "/cave",
