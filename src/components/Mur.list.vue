@@ -30,7 +30,8 @@ export default {
   },
   data() {
     return {
-      listMurImageSrc: null
+      listMurImageSrc: null,
+      content: ''
     }
   },
   methods: {
@@ -41,7 +42,7 @@ export default {
                 this.listMurImageSrc.forEach(mur => mur.image = (MurService.getCaveImageSrc(mur.image)))
               },
               (error) => {
-                this.listCave =
+                this.content =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||
                     error.toString()

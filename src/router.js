@@ -5,6 +5,7 @@ import RegisterItem from "./components/Register.vue"
 
 import MurItem from "./components/Mur.vue"
 import CaveView from "./views/Cave.vue"
+import BouteilleView from "./views/Bouteille"
 
 // lazy-loaded
 const Profile = () => import("./components/Profile")
@@ -27,6 +28,11 @@ const routes = [
         path: "/cave",
         name: "cave",
         component: CaveView,
+    },
+    {
+        path: "/bouteille",
+        name: "bouteille",
+        component: BouteilleView,
     },
     {
         path: "/home",

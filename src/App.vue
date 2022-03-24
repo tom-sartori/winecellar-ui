@@ -18,6 +18,11 @@
           <router-link to="/cave">Cave</router-link>
         </li>
 
+        <!--  Bouteille -->
+        <li v-if="currentUser">
+          <router-link to="/bouteille">Bouteille</router-link>
+        </li>
+
 
         <!--  Admin part. -->
         <li v-if="showAdminBoard">
