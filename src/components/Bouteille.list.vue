@@ -10,6 +10,7 @@
       </li>
     </ul>
 
+    {{ errorMessage }}
 
   </div>
 </template>
@@ -21,7 +22,8 @@ export default {
   name: "BouteilleList",
   data() {
     return {
-      content: ''
+      content: '',
+      errorMessage: ''
     }
   },
   mounted() {
@@ -30,7 +32,7 @@ export default {
               this.content = response.data
             },
             (error) => {
-              this.content =
+              this.errorMessage =
                   (error.response && error.response.data && error.response.data.message) ||
                   error.message ||
                   error.toString()
