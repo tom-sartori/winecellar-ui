@@ -1,48 +1,59 @@
 <template>
   <div>
 
-    <div>
-      <canvas
-          id="c"
-          v-on:mousemove="handlerMousemoveCanvas"
-          v-on:click="handlerClickCanvas"
-          v-on:keyup="handlerKeyupCanvas"
-      >
-      </canvas>
-    </div>
+    <!--    id="c"-->
+
+    <canvas
+        ref="canvas"
+        v-on:mousemove="handlerMousemoveCanvas"
+        v-on:click="handlerClickCanvas"
+        v-on:keyup="handlerKeyupCanvas"
+    >
+    </canvas>
 
     <div>
       <button
-          id="buttonDraw"
+          ref="buttonDraw"
           type="button"
           value="notDrawing"
           v-on:click="handlerClickDrawButton"
       >Dessiner</button>
 
       <button
-          id="buttonDelete"
+          ref="buttonDelete"
           type="button"
           v-on:click="handlerClickDeleteButton"
       >Supprimer</button>
     </div>
 
+    <p>{{ errorResponse }}</p>
   </div>
 </template>
 
 <script>
-// import MurService from "../services/mur.service"
 import Point from '../objects/Point'
 import Polygon from '../objects/Polygon'
+// import MurService from "../services/mur.service"
+import EmplacementService from "../services/emplacement.service"
 
 
 export default {
   name: "MurDetail",
-  props: {},
+  props: {
+    murId: {
+      type: Number,
+      required: true,
+    },
+    srcImage: {
+      type: String,
+      required: true,
+    }
+  },
   data() {
     return {
       content: '',
-      srcImage: 'http://localhost:3000/api/mur-image/2022-03-23T00:39:02.554ZtestImage.png',  // TODO : props
-      murId: 1, /// TODO : props
+      errorResponse: '',
+      isInitialised: false,
 
       canvas: null,
       context: null,
@@ -73,11 +84,9 @@ export default {
     }
   },
   mounted() {
-    /**
-     * Canvas and context initialisation.
-     * @type {HTMLCanvasElement}
-     */
-    this.canvas = document.getElementById('c')
+    // Canvas and context initialisation.
+    // this.canvas = document.getElementById('c')
+    this.canvas = this.$refs.canvas
     this.canvas.innexText = 'Your browser does not support the HTML5 canvas tag. ';
     this.canvas.tabIndex = 1
 
@@ -93,9 +102,30 @@ export default {
       this.canvas.style.background = 'url(' + this.srcImage + ')'
     }
 
+
     // Buttons.
-    this.buttonDraw = document.getElementById('buttonDraw')
-    this.buttonDelete = document.getElementById('buttonDelete')
+    this.buttonDraw = this.$refs.buttonDraw
+    this.buttonDelete = this.$refs.buttonDelete
+
+
+    // Fetch the list of emplacements for the 'murID' and draw them.
+    EmplacementService.getListEmplacement(this.murId)
+        .then( (response) => {
+              response.data.forEach( emplacement => {
+                this.listPointPolygon = emplacement.points
+                this.addPolygon(emplacement.id)
+              })
+
+              this.isInitialised = true
+            },
+            (error) => {
+              this.errorResponse =
+                  (error.response && error.response.data && error.response.data.message) ||
+                  error.message ||
+                  error.toString()
+              this.isInitialised = true
+            }
+        )
   },
   methods: {
     /*****************************************************************************************************************
@@ -117,14 +147,40 @@ export default {
      * Create a polygon, show it, add it to the list listPolygon and refresh the canvas.
      * To create the polygon, use the points in the list listPointPolygon.
      */
-    addPolygon() {
+    addPolygon(emplacementId) {
       if (this.listPointPolygon.length >= 3) {  // If the polygon is at least a triangle.
         let polygon = new Polygon(this.listPointPolygon)
         this.showPolygon(polygon)
-        this.listPolygon.push(polygon)
 
-        this.listPointPolygon = []
-        this.refreshCanvas()
+        if (this.isInitialised) {
+          // Send points of the polygon to the api to create a new emplacement.
+          EmplacementService.createEmplacement(this.murId, this.listPointPolygon)
+              .then((response) => {
+                    // Get the emplacementId from the api.
+                    this.listPolygon.push({
+                      emplacementId: response.data.id,
+                      polygon: polygon
+                    })
+                    this.listPointPolygon = []
+                    this.refreshCanvas()
+                  },
+                  (error) => {
+                    this.errorResponse =
+                        (error.response && error.response.data && error.response.data.message) ||
+                        error.message ||
+                        error.toString()
+                  }
+              )
+        }
+        else  {
+          // If not initialised, the emplacementId is in params. It has been gotten by a GET in emplacement.service.
+          this.listPolygon.push({
+            emplacementId: emplacementId,
+            polygon: polygon
+          })
+          this.listPointPolygon = []
+          this.refreshCanvas()
+        }
       }
     },
 
@@ -134,7 +190,7 @@ export default {
     refreshCanvas() {
       this.clearCanvas()
       for (let i = 0; i < this.listPolygon.length; i++) {
-        let polygon = this.listPolygon[i]
+        let polygon = this.listPolygon[i].polygon
         this.setColor(polygon.path2d, this.polygonColor)
       }
     },
@@ -199,7 +255,7 @@ export default {
       this.lastMouseEvent = event  // Used by rollbackDraw(...).
 
       for (let i = 0; i < this.listPolygon.length; i++) {
-        let polygon = this.listPolygon[i]
+        let polygon = this.listPolygon[i].polygon
         if (this.context.isPointInPath(polygon.path2d, event.offsetX, event.offsetY)) {  // If the polygon in hivered.
           this.setColor(polygon.path2d, this.isDeleting ? this.hoverDeletePolygonColor : this.hoverPolygonColor)
         }
@@ -232,7 +288,26 @@ export default {
       }
       if (this.isDeleting) {
         for (let i = 0; i < this.listPolygon.length; i++) {
-          if (this.context.isPointInPath(this.listPolygon[i].path2d, event.offsetX, event.offsetY)) {
+          if (this.context.isPointInPath(this.listPolygon[i].polygon.path2d, event.offsetX, event.offsetY)) {
+            // The emplacement/polygon which the user has just clicked is this.listPolygon[i].
+            // This element contains the emplacementId and the polygon.
+
+            // Delete the emplacement by sending request to the api.
+            EmplacementService.deleteEmplacement(this.listPolygon[i].emplacementId)
+                .then((response) => {
+                      if (response.status !== 204) {
+                        console.log('Not deleted. ')
+                      }
+                    },
+                    (error) => {
+                      this.errorResponse =
+                          (error.response && error.response.data && error.response.data.message) ||
+                          error.message ||
+                          error.toString()
+                    }
+                )
+
+            // Delete the emplacement/polygon on the front.
             this.listPolygon.splice(i, 1)
             this.refreshCanvas()
             this.handlerClickDeleteButton()  // Switch the delete button.

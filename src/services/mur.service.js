@@ -7,8 +7,13 @@ const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.CAVE.MUR
 
 class CaveService {
 
-    getCaveImageSrc (imageSrc) {
+    getMurImageSrc (imageSrc) {
         return process.env.VUE_APP_API_URL + CONSTANTS.ROOT.IMAGE.MUR_IMAGE_PATH + '/' + imageSrc
+    }
+
+    getMur (murId) {
+        return axios.get(API_URL + CONSTANTS.ROOT.ACTION.FIND_BY_PK + CONSTANTS.ROOT.PARAM.ID + murId,
+            { headers: authHeader() })
     }
 
     getListMur (caveId) {

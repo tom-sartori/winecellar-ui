@@ -2,10 +2,13 @@
   <div>
     <ul>
       <li
-          v-for="(item) in listMurImageSrc"
+          v-for="(item) in listMur"
           :key="item.id"
       >
-        <img :src="item.image" alt="image">
+        <mur-detail
+            :mur-id="item.id"
+            :src-image="item.image"
+        ></mur-detail>
       </li>
     </ul>
 
@@ -14,9 +17,11 @@
 
 <script>
 import MurService from "../services/mur.service"
+import MurDetail from "@/components/Mur.detail";
 
 export default {
   name: "MurList",
+  components: {MurDetail},
   props: {
     caveId: {
       type: String,
@@ -30,7 +35,7 @@ export default {
   },
   data() {
     return {
-      listMurImageSrc: null,
+      listMur: null,
       content: ''
     }
   },
@@ -38,8 +43,8 @@ export default {
     fetchListMur () {
       MurService.getListMur(this.caveId)
           .then( (response) => {
-                this.listMurImageSrc = response.data
-                this.listMurImageSrc.forEach(mur => mur.image = (MurService.getCaveImageSrc(mur.image)))
+                this.listMur = response.data
+                this.listMur.forEach(mur => mur.image = (MurService.getMurImageSrc(mur.image)))
               },
               (error) => {
                 this.content =
