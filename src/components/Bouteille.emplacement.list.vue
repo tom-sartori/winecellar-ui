@@ -8,7 +8,7 @@
       >
         {{ bouteille }}
 
-        <button @click="handlerClickButtonSub(bouteille.id)">-</button>
+        <button @click="handlerClickButtonSub(bouteille)" v-text="subButtonText(bouteille)"></button>
         <button @click="handlerClickButtonAdd(bouteille.id)">+</button>
       </li>
     </ul>
@@ -65,8 +65,24 @@ export default {
               }
           )
     },
-    handlerClickButtonSub (bouteilleId) {
-      this.updateEmplacement(bouteilleId, -1)
+    handlerClickButtonSub (bouteille) {
+      if (bouteille.quantity <= 0) {
+        // Remove the bottle from the emplacement.
+        BouteilleService.deleteByEmplacement(bouteille.id, this.emplacementId)
+            .then( () => {
+                  this.fetchListBouteille()
+                },
+                (error) => {
+                  this.errorMessage =
+                      (error.response && error.response.data && error.response.data.message) ||
+                      error.message ||
+                      error.toString()
+                }
+            )
+      }
+      else {
+        this.updateEmplacement(bouteille.id, -1)
+      }
     },
     handlerClickButtonAdd (bouteilleId) {
       this.updateEmplacement(bouteilleId, 1)
@@ -90,6 +106,12 @@ export default {
                     error.toString()
               }
           )
+    },
+    subButtonText (bouteille) {
+      if (bouteille.quantity < 1) {
+        return 'x'
+      }
+      return '-'
     }
   }
 }

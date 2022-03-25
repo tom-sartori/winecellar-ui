@@ -82,6 +82,7 @@ export default {
       hoverPolygonColor: 'rgb(0, 0, 0, 0.8)',
       hoverDeletePolygonColor: 'rgb(217, 30, 24, 0.8)',
       drawingPolygonColor: 'rgba(44, 130, 201, 0.4)',
+      selectedPolygonColor: 'rgba(3, 201, 169, 0.4)',
 
       // Used to get the cursor place when the user draw back the polygon (rollbackDraw(...)).
       lastMouseEvent: null,
@@ -177,7 +178,7 @@ export default {
                       polygon: polygon
                     })
                     this.listPointPolygon = []
-                    this.refreshCanvas()
+                    // this.refreshCanvas()
                   },
                   (error) => {
                     this.errorResponse =
@@ -194,9 +195,10 @@ export default {
             polygon: polygon
           })
           this.listPointPolygon = []
-          this.refreshCanvas()
+          // this.refreshCanvas()
         }
       }
+      this.refreshCanvas()
     },
 
     /**
@@ -271,7 +273,10 @@ export default {
 
       for (let i = 0; i < this.listPolygon.length; i++) {
         let polygon = this.listPolygon[i].polygon
-        if (this.context.isPointInPath(polygon.path2d, event.offsetX, event.offsetY)) {  // If the polygon in hivered.
+        if (this.selectedEmplacementId === this.listPolygon[i].emplacementId) {
+          this.setColor(this.listPolygon[i].polygon.path2d, this.selectedPolygonColor)
+        }
+        else if (this.context.isPointInPath(polygon.path2d, event.offsetX, event.offsetY)) {  // If the polygon in hivered.
           this.setColor(polygon.path2d, this.isDeleting ? this.hoverDeletePolygonColor : this.hoverPolygonColor)
         }
         else {
@@ -335,6 +340,8 @@ export default {
         for (let i = 0; i < this.listPolygon.length; i++) {
           if (this.context.isPointInPath(this.listPolygon[i].polygon.path2d, event.offsetX, event.offsetY)) {
             this.selectedEmplacementId = this.listPolygon[i].emplacementId
+            this.refreshCanvas()
+            this.setColor(this.listPolygon[i].polygon.path2d, this.selectedPolygonColor)
           }
         }
       }

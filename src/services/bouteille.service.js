@@ -26,6 +26,17 @@ class CaveService {
             { headers: authHeader() }
         )
     }
+
+    // Need a user token to return his caves.
+    deleteByEmplacement(bouteilleId, emplacementId) {
+        return axios.delete(
+            API_URL +
+            CONSTANTS.ROOT.ACTION.DELETE +
+            CONSTANTS.ROOT.PARAM.ID + bouteilleId +
+            CONSTANTS.ROOT.PARAM.EMPLACEMENT_ID + emplacementId,
+            { headers: authHeader() }
+        )
+    }
 }
 
 export default new CaveService()
