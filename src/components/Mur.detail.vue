@@ -32,7 +32,7 @@
     <bouteille-create
         v-if="selectedEmplacementId"
         :emplacement-id="selectedEmplacementId"
-        @change-isBouteilleListUpdated="setIsBouteilleListUpdated"
+        @change-isBouteilleListUpdated="switchIsBouteilleListUpdated"
     ></bouteille-create>
 
     <p>{{ errorResponse }}</p>
@@ -313,6 +313,7 @@ export default {
                       if (response.status !== 204) {
                         console.log('Not deleted. ')
                       }
+                      this.selectedEmplacementId = null // When we delete the emplacement, we reset this.selectedEmplacementId.
                     },
                     (error) => {
                       this.errorResponse =
@@ -352,7 +353,7 @@ export default {
       }
     },
 
-    setIsBouteilleListUpdated () {
+    switchIsBouteilleListUpdated () {
       this.isBouteilleListUpdated = !this.isBouteilleListUpdated
     },
 
