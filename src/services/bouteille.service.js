@@ -15,10 +15,7 @@ class CaveService {
     // Need a user token to return his caves.
     getListBouteilleByEmplacement(emplacementId) {
         return axios.get(
-            API_URL +
-            CONSTANTS.ROOT.ACTION.FIND_ALL +
-            CONSTANTS.ROOT.PARAM.EMPLACEMENT_ID +
-            '/' + emplacementId,
+            API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL + CONSTANTS.ROOT.PARAM.EMPLACEMENT_ID + emplacementId,
             { headers: authHeader() })
     }
 

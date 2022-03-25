@@ -1,15 +1,12 @@
 <template>
   <div>
 
-    <!--    id="c"-->
-
     <canvas
         ref="canvas"
         v-on:mousemove="handlerMousemoveCanvas"
         v-on:click="handlerClickCanvas"
         v-on:keyup="handlerKeyupCanvas"
-    >
-    </canvas>
+    ></canvas>
 
     <div>
       <button
@@ -26,6 +23,11 @@
       >Supprimer</button>
     </div>
 
+    <bouteille-emplacement-list
+        v-if="selectedEmplacementId"
+        :emplacement-id="selectedEmplacementId"
+    ></bouteille-emplacement-list>
+
     <p>{{ errorResponse }}</p>
   </div>
 </template>
@@ -35,10 +37,12 @@ import Point from '../objects/Point'
 import Polygon from '../objects/Polygon'
 // import MurService from "../services/mur.service"
 import EmplacementService from "../services/emplacement.service"
+import BouteilleEmplacementList from "@/components/Bouteille.emplacement.list";
 
 
 export default {
   name: "MurDetail",
+  components: {BouteilleEmplacementList},
   props: {
     murId: {
       type: Number,
@@ -54,6 +58,7 @@ export default {
       content: '',
       errorResponse: '',
       isInitialised: false,
+      selectedEmplacementId: null,
 
       canvas: null,
       context: null,
@@ -286,7 +291,7 @@ export default {
       if (this.isDrawing) {
         this.listPointPolygon.push(new Point(event.offsetX, event.offsetY))
       }
-      if (this.isDeleting) {
+      else if (this.isDeleting) {
         for (let i = 0; i < this.listPolygon.length; i++) {
           if (this.context.isPointInPath(this.listPolygon[i].polygon.path2d, event.offsetX, event.offsetY)) {
             // The emplacement/polygon which the user has just clicked is this.listPolygon[i].
@@ -311,6 +316,14 @@ export default {
             this.listPolygon.splice(i, 1)
             this.refreshCanvas()
             this.handlerClickDeleteButton()  // Switch the delete button.
+          }
+        }
+      }
+      else {
+        // Not drawing and deleting so, the user is clicking for looking what is inside an emplacement.
+        for (let i = 0; i < this.listPolygon.length; i++) {
+          if (this.context.isPointInPath(this.listPolygon[i].polygon.path2d, event.offsetX, event.offsetY)) {
+            this.selectedEmplacementId = this.listPolygon[i].emplacementId
           }
         }
       }

@@ -16,6 +16,16 @@ class EmplacementService {
             { headers: authHeader() })
     }
 
+    updateEmplacement (emplacementId, bouteilleId, quantity) {
+        let data =
+            {
+                emplacementId: emplacementId,
+                bouteilleId: bouteilleId,
+                quantity: quantity
+            }
+        return axios.put(API_URL + CONSTANTS.ROOT.ACTION.UPDATE, data, { headers: authHeader() })
+    }
+
     createEmplacement(murId, listPoint) {
         let data =
             {
