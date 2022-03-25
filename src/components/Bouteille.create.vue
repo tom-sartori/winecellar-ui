@@ -66,6 +66,12 @@ export default {
     Field,
     ErrorMessage,
   },
+  props: {
+    emplacementId: {
+      Number,
+      required: false
+    }
+  },
   data() {
     const schema = yup.object().shape({
       nomBouteilleName: yup
@@ -110,6 +116,9 @@ export default {
   },
   methods: {
     onSubmit (values) {
+      if (this.emplacementId) { // If emplacementId is set, it means that to bottle is added to an emplacement.
+        values['emplacementId'] = this.emplacementId
+      }
       BouteilleService.createBouteille(values)
           .then( (response) => {
                 if (response.status === 201) {
@@ -119,6 +128,7 @@ export default {
                 else {
                   this.content = response.data
                 }
+                this.$emit('change-isBouteilleListUpdated') // When a bottle is created, the bottle list has to be updated.
               },
               (error) => {
                 this.content =

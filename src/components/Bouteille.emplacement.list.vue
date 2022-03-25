@@ -28,11 +28,18 @@ export default {
     emplacementId: {
       String,
       required: true
+    },
+    isBouteilleListUpdated: {
+      Boolean,
+      required: true
     }
   },
   watch: {
     emplacementId() {
-      this.fetchBouteille()
+      this.fetchListBouteille()
+    },
+    isBouteilleListUpdated () {
+      this.fetchListBouteille()
     }
   },
   data() {
@@ -42,10 +49,10 @@ export default {
     }
   },
   mounted() {
-    this.fetchBouteille()
+    this.fetchListBouteille()
   },
   methods: {
-    fetchBouteille () {
+    fetchListBouteille () {
       BouteilleService.getListBouteilleByEmplacement(this.emplacementId)
           .then( (response) => {
                 this.listBouteille = response.data
@@ -74,7 +81,7 @@ export default {
       // Send the request.
       EmplacementService.updateEmplacement(this.emplacementId, bouteilleId, quantity)
           .then( () => {
-                this.fetchBouteille()
+                this.fetchListBouteille()
               },
               (error) => {
                 this.errorMessage =

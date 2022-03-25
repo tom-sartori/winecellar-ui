@@ -26,7 +26,14 @@
     <bouteille-emplacement-list
         v-if="selectedEmplacementId"
         :emplacement-id="selectedEmplacementId"
+        :is-bouteille-list-updated="isBouteilleListUpdated"
     ></bouteille-emplacement-list>
+
+    <bouteille-create
+        v-if="selectedEmplacementId"
+        :emplacement-id="selectedEmplacementId"
+        @change-isBouteilleListUpdated="setIsBouteilleListUpdated"
+    ></bouteille-create>
 
     <p>{{ errorResponse }}</p>
   </div>
@@ -35,14 +42,14 @@
 <script>
 import Point from '../objects/Point'
 import Polygon from '../objects/Polygon'
-// import MurService from "../services/mur.service"
 import EmplacementService from "../services/emplacement.service"
 import BouteilleEmplacementList from "@/components/Bouteille.emplacement.list";
+import BouteilleCreate from "@/components/Bouteille.create";
 
 
 export default {
   name: "MurDetail",
-  components: {BouteilleEmplacementList},
+  components: {BouteilleCreate, BouteilleEmplacementList},
   props: {
     murId: {
       type: Number,
@@ -59,6 +66,9 @@ export default {
       errorResponse: '',
       isInitialised: false,
       selectedEmplacementId: null,
+
+      // Modified by $emit from bouteille.creation, when the user add a bottle to an emplacement. So the bouteille.list has to be updated.
+      isBouteilleListUpdated: true,
 
       canvas: null,
       context: null,
@@ -340,6 +350,10 @@ export default {
           this.rollbackDraw()
           break
       }
+    },
+
+    setIsBouteilleListUpdated () {
+      this.isBouteilleListUpdated = !this.isBouteilleListUpdated
     },
 
 
