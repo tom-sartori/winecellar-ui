@@ -28,7 +28,8 @@ class CaveService {
         return axios.post(API_URL + CONSTANTS.ROOT.ACTION.CREATE, fd, {
             onUploadProgress: uploadEvent => {
                 console.log('Upload progress : ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
-            }
+            },
+            headers: authHeader()
         })
     }
 }

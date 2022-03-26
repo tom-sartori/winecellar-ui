@@ -1,19 +1,40 @@
 <template>
   <div>
+    <table v-if="listBouteille.length">
+      <caption v-text="captionText"></caption>
+      <thead>
+      <tr>
+        <th>Quantité</th>
+        <th>Nom</th>
+        <th>Appellation</th>
+        <th>Domaine</th>
+        <th>Millésime</th>
+        <th>Type de vin</th>
+        <th>Taille de la bouteille</th>
+        <th v-if="emplacementId">Actions</th>
+      </tr>
+      </thead>
 
-    <ul>
-      <li
+      <tbody>
+      <tr
           v-for="bouteille in listBouteille"
-          :key="bouteille.id"
-      >
-        {{ bouteille }}
-
-        <!-- Used to remove a bottle from an emplacement.-->
-        <button @click="handlerClickButtonSub(bouteille)" v-if="emplacementId" v-text="subButtonText(bouteille)"></button>
-        <!-- Used to add a bottle from an emplacement.-->
-        <button @click="handlerClickButtonAdd(bouteille.id)" v-if="emplacementId">+</button>
-      </li>
-    </ul>
+          :key="bouteille.id">
+        <td>{{ bouteille.quantity }}</td>
+        <td>{{ bouteille.bouteille.nomBouteille.name }}</td>
+        <td>{{ bouteille.bouteille.appellation.name }}</td>
+        <td>{{ bouteille.bouteille.domaine.name }}</td>
+        <td>{{ bouteille.bouteille.millesime.name }}</td>
+        <td>{{ bouteille.bouteille.typeVin.name }}</td>
+        <td>{{ bouteille.bouteille.tailleBouteille.name }}</td>
+        <td>
+          <!-- Used to remove a bottle from an emplacement.-->
+          <button @click="handlerClickButtonSub(bouteille)" v-if="emplacementId" v-text="subButtonText(bouteille)"></button>
+          <!-- Used to add a bottle from an emplacement.-->
+          <button @click="handlerClickButtonAdd(bouteille.id)" v-if="emplacementId">+</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
 
     {{ errorMessage }}
 
@@ -65,18 +86,17 @@ export default {
       let fetchFunction = null
       let fetchParam = null
 
+      // This component displays a list on bottles. This list can be for an emplacement, a 'mur' or the full list of an user.
+      // So we set de good function and attrivutes.
       if (this.emplacementId) {
-        console.log('emplacementId : ' + this.emplacementId)
         fetchFunction = BouteilleService.getListBouteilleByEmplacement
         fetchParam = this.emplacementId
       }
       else if (this.murId) {
-        console.log('murId : ' + this.murId)
         fetchFunction = BouteilleService.getListBouteilleByMur
         fetchParam = this.murId
       }
       else {
-        console.log('by user ')
         fetchFunction = BouteilleService.getListBouteille
         fetchParam = null
       }
@@ -141,6 +161,20 @@ export default {
         return 'x'
       }
       return '-'
+    }
+  },
+  computed: {
+    captionText () {
+      let text = "Liste des bouteilles"
+      if (this.emplacementId) {
+        return text + " dans l'emplacement sélectionné. "
+      }
+      else if (this.murId) {
+        return text + " dans le mur sélectionné. "
+      }
+      else {
+        return text + '. '
+      }
     }
   }
 }
