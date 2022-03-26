@@ -8,8 +8,10 @@
       >
         {{ bouteille }}
 
-        <button @click="handlerClickButtonSub(bouteille)" v-text="subButtonText(bouteille)"></button>
-        <button @click="handlerClickButtonAdd(bouteille.id)">+</button>
+        <!-- Used to remove a bottle from an emplacement.-->
+        <button @click="handlerClickButtonSub(bouteille)" v-if="emplacementId" v-text="subButtonText(bouteille)"></button>
+        <!-- Used to add a bottle from an emplacement.-->
+        <button @click="handlerClickButtonAdd(bouteille.id)" v-if="emplacementId">+</button>
       </li>
     </ul>
 
@@ -25,9 +27,13 @@ import EmplacementService from "../services/emplacement.service"
 export default {
   name: "BouteilleEmplacementList",
   props: {
+    murId: {
+      String,
+      required: false
+    },
     emplacementId: {
       String,
-      required: true
+      required: false
     },
     isBouteilleListUpdated: {
       Boolean,
@@ -35,6 +41,9 @@ export default {
     }
   },
   watch: {
+    murId() {
+      this.fetchListBouteille()
+    },
     emplacementId() {
       this.fetchListBouteille()
     },
@@ -53,7 +62,27 @@ export default {
   },
   methods: {
     fetchListBouteille () {
-      BouteilleService.getListBouteilleByEmplacement(this.emplacementId)
+      let fetchFunction = null
+      let fetchParam = null
+
+      if (this.emplacementId) {
+        console.log('emplacementId : ' + this.emplacementId)
+        fetchFunction = BouteilleService.getListBouteilleByEmplacement
+        fetchParam = this.emplacementId
+      }
+      else if (this.murId) {
+        console.log('murId : ' + this.murId)
+        fetchFunction = BouteilleService.getListBouteilleByMur
+        fetchParam = this.murId
+      }
+      else {
+        console.log('by user ')
+        fetchFunction = BouteilleService.getListBouteille
+        fetchParam = null
+      }
+
+      // BouteilleService.getListBouteilleByEmplacement(this.emplacementId)
+      fetchFunction(fetchParam)
           .then( (response) => {
                 this.listBouteille = response.data
               },

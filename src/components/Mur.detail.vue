@@ -23,8 +23,10 @@
       >Supprimer</button>
     </div>
 
+<!--    Used to close the emplacement list, to reveal the mur list.-->
+    <button @click="handlerClickButtonClose" v-if="selectedEmplacementId">x</button>
     <bouteille-emplacement-list
-        v-if="selectedEmplacementId"
+        :mur-id="murId"
         :emplacement-id="selectedEmplacementId"
         :is-bouteille-list-updated="isBouteilleListUpdated"
     ></bouteille-emplacement-list>
@@ -405,6 +407,9 @@ export default {
         this.buttonDelete.innerText = 'Stopper la suppression'
       }
       this.isDeleting = !this.isDeleting;
+    },
+    handlerClickButtonClose () {
+      this.selectedEmplacementId = null
     }
   }
 }
