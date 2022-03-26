@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import MurService from "../services/mur.service"
+import MurService from "../../services/Mur.service"
 
 export default {
   name: "MurCreation",

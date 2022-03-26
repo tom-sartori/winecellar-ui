@@ -8,11 +8,6 @@
           <router-link to="/home">Accueil</router-link>
         </li>
 
-        <!--  Mur -->
-        <li>
-          <router-link to="/mur">Mur</router-link>
-        </li>
-
         <!--  Cave -->
         <li v-if="currentUser">
           <router-link to="/cave">Cave</router-link>

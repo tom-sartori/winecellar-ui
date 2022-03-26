@@ -4,8 +4,8 @@
       <h3>{{ title }}</h3>
     </header>
 
-    <bouteille-create></bouteille-create>
-    <bouteille-list></bouteille-list>
+    <bouteille-creation></bouteille-creation>
+    <bouteille-list :isBouteilleListUpdated="true"></bouteille-list>
 
   </div>
 </template>
@@ -13,11 +13,11 @@
 <script>
 
 
-import BouteilleCreate from "@/components/Bouteille.create";
-import BouteilleList from "@/components/Bouteille.list";
+import BouteilleCreation from "@/components/Bouteille/Bouteille.creation";
+import BouteilleList from "@/components/Bouteille/Bouteille.list";
 export default {
-  name: "CaveVue",
-  components: {BouteilleList, BouteilleCreate},
+  name: "BouteilleView",
+  components: {BouteilleList, BouteilleCreation},
   data() {
     return {
       title: "Mes bouteilles",

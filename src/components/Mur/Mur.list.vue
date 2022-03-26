@@ -2,12 +2,16 @@
   <div>
     <ul>
       <li
-          v-for="(item) in listMur"
-          :key="item.id"
+          v-for="(mur) in listMur"
+          :key="mur.id"
       >
+        <button
+            @click="handlerClickDeleteButton(mur.id)"
+        >Supprimer le mur en dessous</button>
+
         <mur-detail
-            :mur-id="item.id"
-            :src-image="item.image"
+            :mur-id="mur.id"
+            :src-image="mur.image"
         ></mur-detail>
       </li>
     </ul>
@@ -16,8 +20,8 @@
 </template>
 
 <script>
-import MurService from "../services/mur.service"
-import MurDetail from "@/components/Mur.detail";
+import MurService from "../../services/Mur.service"
+import MurDetail from "@/components/Mur/Mur.detail";
 
 export default {
   name: "MurList",
@@ -39,6 +43,9 @@ export default {
       content: ''
     }
   },
+  mounted() {
+    this.fetchListMur()
+  },
   methods: {
     fetchListMur () {
       MurService.getListMur(this.caveId)
@@ -53,10 +60,20 @@ export default {
                     error.toString()
               }
           )
+    },
+    handlerClickDeleteButton (murId) {
+      MurService.deleteMur(murId)
+          .then( () => {
+                this.fetchListMur()
+              },
+              (error) => {
+                this.content =
+                    (error.response && error.response.data && error.response.data.message) ||
+                    error.message ||
+                    error.toString()
+              }
+          )
     }
-  },
-  mounted() {
-    this.fetchListMur()
   }
 }
 </script>

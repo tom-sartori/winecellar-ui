@@ -7,10 +7,6 @@ const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.CAVE.EMPLACE
 
 class EmplacementService {
 
-    // getCaveImageSrc (imageSrc) {
-    //     return process.env.VUE_APP_API_URL + CONSTANTS.ROOT.IMAGE.MUR_IMAGE_PATH + '/' + imageSrc
-    // }
-
     getListEmplacement (murId) {
         return axios.get(API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL + CONSTANTS.ROOT.PARAM.MUR_ID + murId,
             { headers: authHeader() })

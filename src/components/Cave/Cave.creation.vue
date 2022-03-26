@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import CaveService from "../services/cave.service"
+import CaveService from "../../services/Cave.service"
 
 export default {
   name: "CaveCreation",

@@ -1,11 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router"
-import HomeItem from "./components/Home.vue"
+import HomeView from "./views/Home.vue"
 import LoginItem from "./components/Login.vue"
 import RegisterItem from "./components/Register.vue"
 
 import CaveView from "./views/Cave.vue"
 import BouteilleView from "./views/Bouteille"
-import MurVue from "./views/Mur"
 
 // lazy-loaded
 const Profile = () => import("./components/Profile")
@@ -17,12 +16,7 @@ const routes = [
     {
         path: "/",
         name: "home",
-        component: HomeItem,
-    },
-    {
-        path: "/mur",
-        name: "mur",
-        component: MurVue,
+        component: HomeView,
     },
     {
         path: "/cave",
@@ -36,7 +30,7 @@ const routes = [
     },
     {
         path: "/home",
-        component: HomeItem,
+        component: HomeView,
     },
     {
         path: "/login",

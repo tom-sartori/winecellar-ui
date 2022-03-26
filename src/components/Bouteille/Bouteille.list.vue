@@ -42,11 +42,11 @@
 </template>
 
 <script>
-import BouteilleService from "../services/bouteille.service"
-import EmplacementService from "../services/emplacement.service"
+import BouteilleService from "../../services/Bouteille.service"
+import EmplacementService from "../../services/Emplacement.service"
 
 export default {
-  name: "BouteilleEmplacementList",
+  name: "BouteilleList",
   props: {
     murId: {
       String,

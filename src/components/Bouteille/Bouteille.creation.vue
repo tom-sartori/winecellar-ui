@@ -56,11 +56,11 @@
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate"
 import * as yup from "yup"
-import BouteilleService from "../services/bouteille.service"
+import BouteilleService from "../../services/Bouteille.service"
 
 
 export default {
-  name: "BouteilleCreate",
+  name: "BouteilleCreation",
   components: {
     Form,
     Field,

@@ -5,15 +5,10 @@ import CONSTANTS from '../config/constants'
 const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.CAVE.MUR
 
 
-class CaveService {
+class MurService {
 
     getMurImageSrc (imageSrc) {
         return process.env.VUE_APP_API_URL + CONSTANTS.ROOT.IMAGE.MUR_IMAGE_PATH + '/' + imageSrc
-    }
-
-    getMur (murId) {
-        return axios.get(API_URL + CONSTANTS.ROOT.ACTION.FIND_BY_PK + CONSTANTS.ROOT.PARAM.ID + murId,
-            { headers: authHeader() })
     }
 
     getListMur (caveId) {
@@ -32,6 +27,10 @@ class CaveService {
             headers: authHeader()
         })
     }
+
+    deleteMur (murId) {
+        return axios.delete(API_URL + CONSTANTS.ROOT.ACTION.DELETE + CONSTANTS.ROOT.PARAM.ID + murId, { headers: authHeader() })
+    }
 }
 
-export default new CaveService()
+export default new MurService()

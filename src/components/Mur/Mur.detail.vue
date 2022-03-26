@@ -23,35 +23,35 @@
       >Supprimer</button>
     </div>
 
-<!--    Used to close the emplacement list, to reveal the mur list.-->
+    <!--    Used to close the emplacement list, to reveal the mur list.-->
     <button @click="handlerClickButtonClose" v-if="selectedEmplacementId">x</button>
-    <bouteille-emplacement-list
+    <bouteille-list
         :mur-id="murId"
         :emplacement-id="selectedEmplacementId"
         :is-bouteille-list-updated="isBouteilleListUpdated"
-    ></bouteille-emplacement-list>
+    ></bouteille-list>
 
-    <bouteille-create
+    <bouteille-creation
         v-if="selectedEmplacementId"
         :emplacement-id="selectedEmplacementId"
         @change-isBouteilleListUpdated="switchIsBouteilleListUpdated"
-    ></bouteille-create>
+    ></bouteille-creation>
 
     <p>{{ errorResponse }}</p>
   </div>
 </template>
 
 <script>
-import Point from '../objects/Point'
-import Polygon from '../objects/Polygon'
-import EmplacementService from "../services/emplacement.service"
-import BouteilleEmplacementList from "@/components/Bouteille.emplacement.list";
-import BouteilleCreate from "@/components/Bouteille.create";
+import Point from '../../objects/Point'
+import Polygon from '../../objects/Polygon'
+import EmplacementService from "../../services/Emplacement.service"
+import BouteilleList from "@/components/Bouteille/Bouteille.list";
+import BouteilleCreation from "@/components/Bouteille/Bouteille.creation";
 
 
 export default {
   name: "MurDetail",
-  components: {BouteilleCreate, BouteilleEmplacementList},
+  components: { BouteilleCreation, BouteilleList },
   props: {
     murId: {
       type: Number,
@@ -410,6 +410,7 @@ export default {
     },
     handlerClickButtonClose () {
       this.selectedEmplacementId = null
+      this.refreshCanvas()
     }
   }
 }

@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import CaveCreation from "@/components/Cave.creation";
-import CaveList from "@/components/Cave.list";
-import MurCreation from "@/components/Mur.creation";
-import MurList from "@/components/Mur.list";
+import CaveCreation from "@/components/Cave/Cave.creation";
+import CaveList from "@/components/Cave/Cave.list";
+import MurCreation from "@/components/Mur/Mur.creation";
+import MurList from "@/components/Mur/Mur.list";
 
 
 export default {
-  name: "CaveVue",
+  name: "CaveView",
   components: {
     MurList,
     MurCreation,
