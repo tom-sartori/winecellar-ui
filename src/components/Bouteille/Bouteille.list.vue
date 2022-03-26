@@ -26,7 +26,7 @@
         <td>{{ bouteille.bouteille.millesime.name }}</td>
         <td>{{ bouteille.bouteille.typeVin.name }}</td>
         <td>{{ bouteille.bouteille.tailleBouteille.name }}</td>
-        <td>
+        <td v-if="emplacementId">
           <!-- Used to remove a bottle from an emplacement.-->
           <button @click="handlerClickButtonSub(bouteille)" v-if="emplacementId" v-text="subButtonText(bouteille)"></button>
           <!-- Used to add a bottle from an emplacement.-->
