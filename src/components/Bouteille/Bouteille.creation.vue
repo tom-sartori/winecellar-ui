@@ -3,7 +3,10 @@
     <h3>{{ title }}</h3>
     <p>{{content}}</p>
 
-    <Form v-if="!refreshForm" v-slot="{ resetForm }" @submit="onSubmit" :validation-schema="schema">
+    <Form
+        @submit="onSubmit"
+        :validation-schema="schema"
+    >
 
       <div>
         <label for="nomBouteilleName">Nom : </label>
@@ -110,25 +113,18 @@ export default {
     return {
       title: "Ajouter une bouteille de vin",
       content: "",
-      refreshForm: false,
       schema
     }
   },
   methods: {
-    onSubmit (values) {
+    onSubmit (values, { resetForm }) {
       if (this.emplacementId) { // If emplacementId is set, it means that to bottle is added to an emplacement.
         values['emplacementId'] = this.emplacementId
       }
       BouteilleService.createBouteille(values)
-          .then( (response) => {
-                if (response.status === 201) {
-                  this.refreshForm = true
-                  setTimeout(() => {this.refreshForm = false}, 10)  // Used to refresh the Form.
-                }
-                else {
-                  this.content = response.data
-                }
+          .then( () => {
                 this.$emit('change-isBouteilleListUpdated') // When a bottle is created, the bottle list has to be updated.
+                resetForm()
               },
               (error) => {
                 this.content =

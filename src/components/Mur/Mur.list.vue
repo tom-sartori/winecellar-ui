@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h3>{{ title }}</h3>
+
     <ul>
       <li
           v-for="(mur) in listMur"
@@ -30,15 +32,23 @@ export default {
     caveId: {
       type: String,
       required: true,
+    },
+    isMurListUpdated: {
+      type: Boolean,
+      required: true
     }
   },
   watch: {
     caveId() {
       this.fetchListMur()
+    },
+    isMurListUpdated() {
+      this.fetchListMur()
     }
   },
   data() {
     return {
+      title: 'Voici les différents murs de ma cave',
       listMur: null,
       content: ''
     }

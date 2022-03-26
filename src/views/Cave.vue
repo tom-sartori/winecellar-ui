@@ -4,10 +4,10 @@
       <h3>{{ title }}</h3>
     </header>
 
-    <cave-creation></cave-creation>
-    <cave-list @selected-caveId="setCaveId"></cave-list>
-    <mur-creation v-if="caveId" :cave-id="caveId"></mur-creation>
-    <mur-list v-if="caveId" :cave-id="caveId"></mur-list>
+    <cave-creation @update-isCaveUpdated="switchIsCaveUpdated"></cave-creation>
+    <cave-list @selected-caveId="setCaveId" :isCaveUpdated="isCaveUpdated"></cave-list>
+    <mur-creation v-if="caveId" :cave-id="caveId" @isMurListUpdated="switchIsMurListUpdated"></mur-creation>
+    <mur-list v-if="caveId" :cave-id="caveId" :isMurListUpdated="isMurListUpdated"></mur-list>
 
   </div>
 </template>
@@ -31,12 +31,20 @@ export default {
     return {
       title: "Mes caves",
       content: "",
-      caveId: null
+      caveId: null,
+      isCaveUpdated: true,    // Used to trigger cave list when a cave is created.
+      isMurListUpdated: true  // Used to trigger mur list when a mur is created.
     }
   },
   methods: {
     setCaveId (caveId) {
       this.caveId = caveId
+    },
+    switchIsCaveUpdated () {
+      this.isCaveUpdated = !this.isCaveUpdated
+    },
+    switchIsMurListUpdated () {
+      this.isMurListUpdated = !this.isMurListUpdated
     }
   }
 }
