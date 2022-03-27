@@ -1,34 +1,24 @@
 <template>
   <div>
     <header>
-      <h3>{{ content }}</h3>
+      <h3>{{ title }}</h3>
     </header>
+
+    <p>{{ content }}</p>
   </div>
 </template>
 
 <script>
-import UserService from "../services/User.service"
 export default {
   name: "HomeView",
   data() {
     return {
+      title: "Page d'accueil",
       content: "",
     }
   },
   mounted() {
-    UserService.getPublicContent().then(
-        (response) => {
-          this.content = response.data
-        },
-        (error) => {
-          this.content =
-              (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-              error.message ||
-              error.toString()
-        }
-    )
+
   },
 }
 </script>

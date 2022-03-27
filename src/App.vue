@@ -18,28 +18,22 @@
           <router-link to="/bouteille">Bouteille</router-link>
         </li>
 
-
         <!--  Admin part. -->
         <li v-if="showAdminBoard">
           <router-link to="/admin">Administration</router-link>
         </li>
 
-        <!--  User part  -->
-        <li v-if="currentUser">
-          <router-link to="/user">Partie utilisateur</router-link>
-        </li>
-
         <!--  Without connected user. -->
         <li v-if="!currentUser">
-          <router-link to="/register">S'enregistrer</router-link>
+          <router-link to="/register">Créer un compte</router-link>
         </li>
         <li v-if="!currentUser">
-          <router-link to="/login">S'identifier</router-link>
+          <router-link to="/login">Se connecter</router-link>
         </li>
 
         <!--  User connected.  -->
         <li v-if="currentUser">
-          <router-link to="/profile">{{ currentUser.username }}</router-link>
+          <router-link to="/profile">Mon profile</router-link>
         </li>
         <li v-if="currentUser">
           <router-link @click.prevent="logOut" to="/home">Deconnexion</router-link>

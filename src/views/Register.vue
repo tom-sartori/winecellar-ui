@@ -14,6 +14,16 @@
             <ErrorMessage name="email"/>
           </div>
           <div>
+            <label for="firstName">Prénom</label>
+            <Field name="firstName" id="firstName" type="text"/>
+            <ErrorMessage name="firstName"/>
+          </div>
+          <div>
+            <label for="lastName">Nom de famille</label>
+            <Field name="lastName" id="lastName" type="text"/>
+            <ErrorMessage name="lastName"/>
+          </div>
+          <div>
             <label for="password">Password</label>
             <Field name="password" id="password" type="password"/>
             <ErrorMessage name="password"/>
@@ -21,7 +31,7 @@
           <div>
             <button :disabled="loading">
               <span v-show="loading"></span>
-              Sign Up
+              Créer mon compte
             </button>
           </div>
         </div>
@@ -38,7 +48,7 @@ import { Form, Field, ErrorMessage } from "vee-validate"
 import * as yup from "yup"
 
 export default {
-  name: "RegisterItem",
+  name: "RegisterView",
   components: {
     Form,
     Field,
@@ -56,6 +66,16 @@ export default {
           .required("Email requis !")
           .email("Email invalide. ")
           .max(50, "50 caractères maximum. "),
+      firstName: yup
+          .string()
+          .required("Requis !")
+          .min(1, "1 caractères au minimum. ")
+          .max(50, "50 caractères au maximum. "),
+      lastName: yup
+          .string()
+          .required("Requis !")
+          .min(1, "1 caractères au minimum. ")
+          .max(50, "50 caractères au maximum. "),
       password: yup
           .string()
           .required("Mot de passe requis !")

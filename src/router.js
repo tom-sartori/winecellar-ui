@@ -1,20 +1,23 @@
 import { createWebHistory, createRouter } from "vue-router"
-import HomeView from "./views/Home.vue"
-import LoginItem from "./components/Login.vue"
-import RegisterItem from "./components/Register.vue"
+import HomeView from "@/views/Home.vue"
+import LoginView from "@/views/Login.vue"
+import RegisterView from "@/views/Register.vue"
+import ProfileView from "@/views/Profile"
 
-import CaveView from "./views/Cave.vue"
-import BouteilleView from "./views/Bouteille"
+import CaveView from "@/views/Cave.vue"
+import BouteilleView from "@/views/Bouteille"
+import AdminView from "@/views/Admin"
 
-// lazy-loaded
-const Profile = () => import("./components/Profile")
-const BoardAdmin = () => import("./components/BoardAdmin")
-const BoardUser = () => import("./components/BoardUser")
 
 
 const routes = [
     {
         path: "/",
+        name: "home",
+        component: HomeView,
+    },
+    {
+        path: "/home",
         name: "home",
         component: HomeView,
     },
@@ -29,34 +32,24 @@ const routes = [
         component: BouteilleView,
     },
     {
-        path: "/home",
-        component: HomeView,
-    },
-    {
         path: "/login",
-        component: LoginItem,
+        name: "login",
+        component: LoginView,
     },
     {
         path: "/register",
-        component: RegisterItem,
+        name: "register",
+        component: RegisterView,
     },
     {
         path: "/profile",
         name: "profile",
-        // lazy-loaded
-        component: Profile,
+        component: ProfileView,
     },
     {
         path: "/admin",
         name: "admin",
-        // lazy-loaded
-        component: BoardAdmin,
-    },
-    {
-        path: "/user",
-        name: "user",
-        // lazy-loaded
-        component: BoardUser,
+        component: AdminView,
     },
 ]
 
@@ -66,7 +59,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home', '/mur']
+    const publicPages = ['/login', '/register', '/home']
     const authRequired = !publicPages.includes(to.path)
     const loggedIn = localStorage.getItem('user')
 

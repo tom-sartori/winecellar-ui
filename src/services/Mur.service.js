@@ -1,5 +1,5 @@
 import axios from 'axios'
-import authHeader from './auth-header'
+import authHeader from './Auth-header'
 import CONSTANTS from '../config/constants'
 
 const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.CAVE.MUR

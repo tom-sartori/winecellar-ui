@@ -9,6 +9,8 @@ class AuthService {
         return axios
             .post(API_URL + CONSTANTS.ROOT.ACTION.SIGNUP, {
                 username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 email: user.email,
                 password: user.password
             })

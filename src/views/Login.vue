@@ -33,7 +33,7 @@ import { Form, Field, ErrorMessage } from "vee-validate"
 import * as yup from "yup"
 
 export default {
-  name: "LoginItem",
+  name: "LoginView",
   components: {
     Form,
     Field,
