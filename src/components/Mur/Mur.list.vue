@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <h3>{{ title }}</h3>
+  <div class="main">
+    <h3 v-show="listMur && listMur.length">{{ title }}</h3>
 
     <ul>
       <li
           v-for="(mur) in listMur"
           :key="mur.id"
+          class="main2"
       >
         <button
             @click="handlerClickDeleteButton(mur.id)"
@@ -87,3 +88,25 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.main {
+  background-color: var(--blue-3);
+  border-radius: var(--border-radius);
+  padding: 20px;
+}
+
+.main2 {
+  background-color: var(--blue-2);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin: 20px;
+}
+
+button {
+  font-size: var(--normal-text-size);
+  margin: 10px;
+}
+
+</style>

@@ -1,7 +1,13 @@
 <template>
   <div>
-    <table v-if="listBouteille.length">
-      <caption v-text="captionText"></caption>
+    <h3 v-if="listBouteille.length || isLoading">{{ captionText }}</h3>
+
+    <div v-show="isLoading" ref="loading" class="progress">
+      <div class="indeterminate"></div>
+    </div>
+
+    <table v-if="listBouteille.length" class="striped highlight centered responsive-table">
+<!--      <caption v-text="captionText"></caption>-->
       <thead>
       <tr>
         <th>Quantité</th>
@@ -28,9 +34,13 @@
         <td>{{ bouteille.bouteille.tailleBouteille.name }}</td>
         <td v-if="emplacementId">
           <!-- Used to remove a bottle from an emplacement.-->
-          <button @click="handlerClickButtonSub(bouteille)" v-if="emplacementId" v-text="subButtonText(bouteille)"></button>
+          <button @click="handlerClickButtonSub(bouteille)" v-if="emplacementId">
+            <i class="material-icons" v-text="subButtonText(bouteille)"></i>
+          </button>
           <!-- Used to add a bottle from an emplacement.-->
-          <button @click="handlerClickButtonAdd(bouteille.id)" v-if="emplacementId">+</button>
+          <button @click="handlerClickButtonAdd(bouteille.id)" v-if="emplacementId">
+            <i class="material-icons">add_circle_outline</i>
+          </button>
         </td>
       </tr>
       </tbody>
@@ -75,7 +85,8 @@ export default {
   data() {
     return {
       listBouteille: '',
-      errorMessage: ''
+      errorMessage: '',
+      isLoading: true
     }
   },
   mounted() {
@@ -83,6 +94,7 @@ export default {
   },
   methods: {
     fetchListBouteille () {
+      this.isLoading = true
       let fetchFunction = null
       let fetchParam = null
 
@@ -105,8 +117,10 @@ export default {
       fetchFunction(fetchParam)
           .then( (response) => {
                 this.listBouteille = response.data
+                this.isLoading = false
               },
               (error) => {
+                this.isLoading = false
                 this.errorMessage =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||
@@ -158,24 +172,48 @@ export default {
     },
     subButtonText (bouteille) {
       if (bouteille.quantity < 1) {
-        return 'x'
+        return 'delete_forever'
       }
-      return '-'
+      return 'remove'
     }
   },
   computed: {
     captionText () {
       let text = "Liste des bouteilles"
       if (this.emplacementId) {
-        return text + " dans l'emplacement sélectionné. "
+        return text + " dans l'emplacement sélectionné"
       }
       else if (this.murId) {
-        return text + " dans le mur sélectionné. "
+        return text + " dans le mur sélectionné"
       }
       else {
-        return text + '. '
+        return text
       }
     }
   }
 }
 </script>
+
+<style scoped>
+
+button {
+  font-size: var(--normal-text-size);
+  margin: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+thead {
+  background-color: var(--clear-color);
+}
+
+th, td {
+  padding: 1em;
+  border-bottom: 2px solid white;
+}
+
+</style>

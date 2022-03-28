@@ -1,8 +1,9 @@
 <template>
   <div>
+    <h1>{{ title }}</h1>
     <div>
       <Form @submit="handleRegister" :validation-schema="schema">
-        <div v-if="!successful">
+        <div v-if="!content">
           <div>
             <label for="username">Username</label>
             <Field name="username" id="username" type="text"/>
@@ -28,17 +29,19 @@
             <Field name="password" id="password" type="password"/>
             <ErrorMessage name="password"/>
           </div>
+
+          <div v-show="isLoading" ref="loading" class="progress">
+            <div class="indeterminate"></div>
+          </div>
+
           <div>
-            <button :disabled="loading">
-              <span v-show="loading"></span>
+            <button :disabled="isLoading">
               Créer mon compte
             </button>
           </div>
         </div>
       </Form>
-      <div v-if="message" :class="successful ? 'alert-success' : 'alert-danger'">
-        {{ message }}
-      </div>
+      <p v-if="content">{{ content }}</p>
     </div>
   </div>
 </template>
@@ -83,9 +86,9 @@ export default {
           .max(40, "40 caractères au maximum. "),
     })
     return {
-      successful: false,
-      loading: false,
-      message: "",
+      title: 'Créer un compte',
+      isLoading: false,
+      content: "",
       schema,
     }
   },
@@ -101,24 +104,21 @@ export default {
   },
   methods: {
     handleRegister(user) {
-      this.message = ""
-      this.successful = false
-      this.loading = true
+      this.isLoading = true
+      this.content = ""
       this.$store.dispatch("auth/register", user).then(
           (data) => {
-            this.message = data.message
-            this.successful = true
-            this.loading = false
+            this.content = data.message
+            this.isLoading = false
           },
           (error) => {
-            this.message =
+            this.isLoading = false
+            this.content =
                 (error.response &&
                     error.response.data &&
                     error.response.data.message) ||
                 error.message ||
                 error.toString()
-            this.successful = false
-            this.loading = false
           }
       )
     },

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>{{ title }}</h1>
     <div>
       <Form @submit="handleLogin" :validation-schema="schema">
         <div>
@@ -12,16 +13,18 @@
           <Field name="password" id="password" type="password"/>
           <ErrorMessage name="password"/>
         </div>
+
+        <div v-show="isLoading" ref="loading" class="progress">
+          <div class="indeterminate"></div>
+        </div>
+
         <div>
-          <button :disabled="loading">
-            <span v-show="loading"></span>
-            <span>Login</span>
+          <button :disabled="isLoading">
+            Login
           </button>
         </div>
         <div>
-          <div v-if="message" role="alert">
-            {{ message }}
-          </div>
+          <p v-if="message">{{ message }}</p>
         </div>
       </Form>
     </div>
@@ -45,7 +48,8 @@ export default {
       password: yup.string().required("Password is required!"),
     })
     return {
-      loading: false,
+      title: 'Se connecter',
+      isLoading: false,
       message: "",
       schema,
     }
@@ -62,13 +66,14 @@ export default {
   },
   methods: {
     handleLogin(user) {
-      this.loading = true
+      this.isLoading = true
       this.$store.dispatch("auth/login", user)
           .then(() => {
                 this.$router.push("/profile")
+                this.isLoading = false
               },
               (error) => {
-                this.loading = false
+                this.isLoading = false
                 this.message =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||

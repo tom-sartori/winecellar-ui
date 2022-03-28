@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <header>
-      <h3>{{ title }}</h3>
+  <div class="row">
+    <header class="col s12">
+      <h1>{{ title }}</h1>
     </header>
 
-    <cave-creation @update-isCaveUpdated="switchIsCaveUpdated"></cave-creation>
-    <cave-list @selected-caveId="setCaveId" :isCaveUpdated="isCaveUpdated"></cave-list>
-    <mur-creation v-if="caveId" :cave-id="caveId" @isMurListUpdated="switchIsMurListUpdated"></mur-creation>
-    <mur-list v-if="caveId" :cave-id="caveId" :isMurListUpdated="isMurListUpdated"></mur-list>
+    <div class="divFlex">
+      <cave-creation @update-isCaveUpdated="switchIsCaveUpdated" class="colFlex"></cave-creation> <!-- class="col s12 m4 l6" -->
+      <cave-list @selected-caveId="setCaveId" :isCaveUpdated="isCaveUpdated" class="colFlex"></cave-list>
+    </div>
+    <mur-creation v-if="caveId" :cave-id="caveId" @isMurListUpdated="switchIsMurListUpdated" class="col s12"></mur-creation>
+    <mur-list v-if="caveId" :cave-id="caveId" :isMurListUpdated="isMurListUpdated" class="col s12"></mur-list>
 
   </div>
 </template>
@@ -50,3 +52,32 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+.row {
+  display: grid;
+  grid-gap: 20px;
+}
+
+.divFlex {
+  display: flex;
+  width: 100%;
+
+  background-color: var(--blue-3);
+  border-radius: var(--border-radius);
+}
+
+.colFlex {
+  flex: 1;
+  padding: 20px;
+}
+
+@media only screen and (max-width: 800px) {
+  .divFlex {
+    display: block;
+    width: 100%;
+  }
+}
+
+</style>

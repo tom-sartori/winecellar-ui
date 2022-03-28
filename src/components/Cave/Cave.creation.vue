@@ -11,7 +11,11 @@
       <Field name="caveName" id="caveName" type="text" placeholder="Nom de ma cave"></Field>
       <ErrorMessage name="caveName"/>
 
-      <button type="submit">
+      <div v-show="isLoading" ref="loading" class="progress">
+        <div class="indeterminate"></div>
+      </div>
+
+      <button type="submit" :disabled="isLoading">
         Valider
       </button>
 
@@ -46,17 +50,21 @@ export default {
       title: 'Ajouter une cave',
       content: "",
       newCaveName: "",
+      isLoading: false,
       schema
     }
   },
   methods: {
     onSubmit(values, { resetForm }) {
+      this.isLoading = true
       CaveService.createCave(values.caveName)
           .then( () => {
                 resetForm()
+                this.isLoading = false
                 this.$emit('update-isCaveUpdated')  // When a cave is created, the cave list has to be updated.
               },
               (error) => {
+                this.isLoading = false
                 this.content =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||
@@ -67,3 +75,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+button {
+  font-size: var(--normal-text-size);
+  width: 100%;
+  margin: 10px;
+}
+
+</style>

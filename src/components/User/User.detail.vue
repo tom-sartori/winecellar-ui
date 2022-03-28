@@ -3,6 +3,11 @@
     <h3>
       {{ title }}
     </h3>
+
+    <div v-show="isLoading" ref="loading" class="progress">
+      <div class="indeterminate"></div>
+    </div>
+
     <p>
       <strong>Email :</strong>
       {{currentUser.email}}
@@ -33,6 +38,7 @@ export default {
     return {
       title: 'Mon profile',
       currentUser: null,
+      isLoading: true,
       errorMessage: null
     }
   },
@@ -42,12 +48,15 @@ export default {
   },
   methods: {
     fetchUser() {
+      this.isLoading = true
       const user = this.$store.state.auth.user
       UtilisateurService.getUser(user.id)
           .then((response) => {
                 this.currentUser = response.data
+                this.isLoading = false
               },
               (error) => {
+                this.isLoading = false
                 this.errorMessage =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||

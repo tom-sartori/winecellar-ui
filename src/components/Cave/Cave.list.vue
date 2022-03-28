@@ -3,7 +3,7 @@
     <h3>{{ title }}</h3>
     <label>
       <select @change="selectId">
-        <option disabled selected value> -- Sélectionnez une cave -- </option>
+        <option disabled selected v-text="loadingText"></option>
         <option
             v-for="(item) in options"
             :key="item.id"
@@ -38,6 +38,7 @@ export default {
     return {
       title: 'Sélectionner une cave',
       content: "",
+      loadingText: '',
       options: {},
       selectedId: '',
     }
@@ -47,9 +48,11 @@ export default {
   },
   methods: {
     fetchCaveList () {
+      this.loadingText = 'Chargement...'
       CaveService.getCave()
           .then( (response) => {
                 this.options = response.data
+                this.loadingText = '-- Sélectionnez une cave -- '
               },
               (error) => {
                 this.listCave =
@@ -68,3 +71,26 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+select {
+  display: flex;
+  border-radius: var(--border-radius);
+  border: 0;
+  outline: none;
+  font-size: var(--normal-text-size);
+  background-color: var(--clear-color);
+}
+
+select, option {
+  padding-left: 30px;
+}
+
+select:hover {
+  background-color: var(--hover-color);
+}
+
+
+
+</style>

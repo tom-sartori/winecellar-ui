@@ -2,10 +2,12 @@
   <div>
     <h3>{{ title }}</h3>
 
-    <p>{{ content }}</p>
+    <div v-show="isLoading" ref="loading" class="progress">
+      <div class="indeterminate"></div>
+    </div>
 
-    <table v-if="listUser.length">
-      <caption v-text="title"></caption>
+    <table v-if="listUser.length" class="striped highlight centered responsive-table">
+<!--      <caption v-text="title"></caption>-->
       <thead>
       <tr>
         <th>Username</th>
@@ -54,6 +56,7 @@ export default {
       title: 'Liste des utilisateurs',
       content: '',
       listUser: [],
+      isLoading: true,
       errorMessage: null
     }
   },
@@ -62,11 +65,14 @@ export default {
   },
   methods: {
     fetchListUser() {
+      this.isLoading = true
       UtilisateurService.getListUser()
           .then((response) => {
+                this.isLoading = false
                 this.listUser = response.data
               },
               (error) => {
+                this.isLoading = false
                 this.errorMessage =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||

@@ -1,6 +1,10 @@
 <template>
   <div>
 
+    <div v-show="isLoading" ref="loading" class="progress">
+      <div class="indeterminate"></div>
+    </div>
+
     <canvas
         ref="canvas"
         v-on:mousemove="handlerMousemoveCanvas"
@@ -24,7 +28,9 @@
     </div>
 
     <!--    Used to close the emplacement list, to reveal the mur list.-->
-    <button @click="handlerClickButtonClose" v-if="selectedEmplacementId">x</button>
+    <button @click="handlerClickButtonClose" v-if="selectedEmplacementId">
+      <i class="material-icons">close</i>
+    </button>
     <bouteille-list
         :mur-id="murId"
         :emplacement-id="selectedEmplacementId"
@@ -68,6 +74,7 @@ export default {
       errorResponse: '',
       isInitialised: false,
       selectedEmplacementId: null,
+      isLoading: true,
 
       // Modified by $emit from bouteille.creation, when the user add a bottle to an emplacement. So the bouteille.list has to be updated.
       isBouteilleListUpdated: true,
@@ -126,6 +133,7 @@ export default {
     this.buttonDelete = this.$refs.buttonDelete
 
 
+    this.isLoading = true
     // Fetch the list of emplacements for the 'murID' and draw them.
     EmplacementService.getListEmplacement(this.murId)
         .then( (response) => {
@@ -133,10 +141,11 @@ export default {
                 this.listPointPolygon = emplacement.points
                 this.addPolygon(emplacement.id)
               })
-
+              this.isLoading = false
               this.isInitialised = true
             },
             (error) => {
+              this.isLoading = false
               this.errorResponse =
                   (error.response && error.response.data && error.response.data.message) ||
                   error.message ||
@@ -272,14 +281,17 @@ export default {
     handlerMousemoveCanvas (event) {
       this.clearCanvas()
       this.lastMouseEvent = event  // Used by rollbackDraw(...).
+      let isHovering = false
 
       for (let i = 0; i < this.listPolygon.length; i++) {
         let polygon = this.listPolygon[i].polygon
         if (this.selectedEmplacementId === this.listPolygon[i].emplacementId) {
           this.setColor(this.listPolygon[i].polygon.path2d, this.selectedPolygonColor)
         }
-        else if (this.context.isPointInPath(polygon.path2d, event.offsetX, event.offsetY)) {  // If the polygon in hivered.
+        else if (!this.isDrawing && this.context.isPointInPath(polygon.path2d, event.offsetX, event.offsetY)) {
+          // If not drawing and hovering the polygon : listPolygon[i].
           this.setColor(polygon.path2d, this.isDeleting ? this.hoverDeletePolygonColor : this.hoverPolygonColor)
+          isHovering = true
         }
         else {
           this.setColor(polygon.path2d, this.polygonColor)
@@ -292,6 +304,18 @@ export default {
         listCurrentPoint.push(new Point(event.offsetX, event.offsetY))
 
         this.showPolygon(new Polygon(listCurrentPoint))  // Show a polygon which the last point is the cursor.
+      }
+      if (isHovering) {
+        if (this.isDeleting) {
+          this.canvas.classList.add('cursorNotAllowed')
+        }
+        else {
+          this.canvas.classList.add('cursorGrab')
+        }
+      }
+      else {
+        this.canvas.classList.remove('cursorGrab')
+        this.canvas.classList.remove('cursorNotAllowed')
       }
     },
 
@@ -383,9 +407,11 @@ export default {
       if (this.isDrawing) {  // Create the polygon by clicking the button.
         this.addPolygon()
         this.buttonDraw.innerText = 'Dessiner'
+        this.canvas.classList.remove('cursorCrosshair')
       }
       else {  // Draw polygon and switch button to 'Draw'.
         this.buttonDraw.innerText = 'Valider'
+        this.canvas.classList.add('cursorCrosshair')
       }
       this.isDrawing = !this.isDrawing
     },
@@ -419,7 +445,26 @@ export default {
 </script>
 
 <style scoped>
+
 canvas {
   border: black solid 1px;
+  margin-top: 10px;
 }
+
+.cursorCrosshair {
+  cursor: crosshair;
+}
+
+.cursorGrab {
+  cursor: grab;
+}
+
+.cursorNotAllowed {
+  cursor: not-allowed;
+}
+button {
+  font-size: var(--normal-text-size);
+  margin: 10px;
+}
+
 </style>

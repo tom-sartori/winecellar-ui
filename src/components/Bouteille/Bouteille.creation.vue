@@ -44,9 +44,12 @@
         <ErrorMessage name="tailleBouteilleName"/>
       </div>
 
+      <div v-show="isLoading" ref="loading" class="progress">
+        <div class="indeterminate"></div>
+      </div>
 
       <div>
-        <button @submit="resetForm({ values: {nomBouteilleName: ''}})">
+        <button @submit="resetForm({ values: {nomBouteilleName: ''}})" :disabled="isLoading">
           Valider
         </button>
       </div>
@@ -113,11 +116,13 @@ export default {
     return {
       title: "Ajouter une bouteille de vin",
       content: "",
+      isLoading: false,
       schema
     }
   },
   methods: {
     onSubmit (values, { resetForm }) {
+      this.isLoading = true
       if (this.emplacementId) { // If emplacementId is set, it means that to bottle is added to an emplacement.
         values['emplacementId'] = this.emplacementId
       }
@@ -125,8 +130,10 @@ export default {
           .then( () => {
                 this.$emit('change-isBouteilleListUpdated') // When a bottle is created, the bottle list has to be updated.
                 resetForm()
+                this.isLoading = false
               },
               (error) => {
+                this.isLoading = false
                 this.content =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||
