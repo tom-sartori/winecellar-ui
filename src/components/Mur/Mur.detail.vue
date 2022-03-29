@@ -29,7 +29,7 @@
 
     <!--    Used to close the emplacement list, to reveal the mur list.-->
     <button @click="handlerClickButtonClose" v-if="selectedEmplacementId">
-      <i class="material-icons">close</i>
+      <i class="fa-solid fa-xmark"></i>
     </button>
     <bouteille-list
         :mur-id="murId"
@@ -91,7 +91,7 @@ export default {
       hoverPolygonColor: 'rgb(0, 0, 0, 0.8)',
       hoverDeletePolygonColor: 'rgb(217, 30, 24, 0.8)',
       drawingPolygonColor: 'rgba(44, 130, 201, 0.4)',
-      selectedPolygonColor: 'rgba(3, 201, 169, 0.4)',
+      selectedPolygonColor: 'rgba(3,201,169,0.4)',
 
       // Used to get the cursor place when the user draw back the polygon (rollbackDraw(...)).
       lastMouseEvent: null,

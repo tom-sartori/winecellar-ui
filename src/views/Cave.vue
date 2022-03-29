@@ -64,7 +64,7 @@ export default {
   display: flex;
   width: 100%;
 
-  background-color: var(--blue-3);
+  background-color: var(--background-main-color);
   border-radius: var(--border-radius);
 }
 

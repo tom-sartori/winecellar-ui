@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="divMain">
     <h3>{{ title }}</h3>
 
     <div v-show="isLoading" ref="loading" class="progress">
@@ -117,3 +117,29 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+button {
+  font-size: var(--normal-text-size);
+  margin: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  font-size: var(--normal-text-size);
+}
+
+thead {
+  background-color: var(--clear-color);
+  font-size: var(--thead-text-size);
+}
+
+th, td {
+  padding: 1em;
+  border-bottom: 2px solid white;
+}
+
+</style>

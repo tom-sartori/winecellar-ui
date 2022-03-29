@@ -1,24 +1,24 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
-    <div>
-      <Form @submit="handleLogin" :validation-schema="schema">
-        <div>
+    <div class="divMain">
+      <Form @submit="handleLogin" :validation-schema="schema" class="form">
+        <div class="divField">
           <label for="username">Username</label>
-          <Field name="username" id="username" type="text"/>
-          <ErrorMessage name="username"/>
+          <Field name="username" id="username" type="text" class="field"/>
+          <ErrorMessage name="username" class="errorMessage"/>
         </div>
-        <div>
+        <div class="divField">
           <label for="password">Password</label>
-          <Field name="password" id="password" type="password"/>
-          <ErrorMessage name="password"/>
+          <Field name="password" id="password" type="password" class="field"/>
+          <ErrorMessage name="password"  class="errorMessage"/>
         </div>
 
         <div v-show="isLoading" ref="loading" class="progress">
           <div class="indeterminate"></div>
         </div>
 
-        <div>
+        <div class="divField">
           <button :disabled="isLoading">
             Login
           </button>
@@ -69,7 +69,7 @@ export default {
       this.isLoading = true
       this.$store.dispatch("auth/login", user)
           .then(() => {
-                this.$router.push("/profile")
+                this.$router.push("/cave")
                 this.isLoading = false
               },
               (error) => {
@@ -86,5 +86,47 @@ export default {
 </script>
 
 <style scoped>
+
+.form {
+  border: var(--border-green);
+  border-radius: var(--border-radius);
+  padding: 20px
+}
+
+.divField {
+  margin-top: 20px;
+}
+
+label {
+  color: var(--text-color-dark);
+  font-size: var(--thead-text-size);
+}
+
+.field {
+  color: var(--text-color-dark);
+  font-size: var(--normal-text-size);
+  text-align: center;
+}
+
+.field:hover {
+  background-color: var(--hover-color);
+  transition: background-color 0.5s;
+  border-radius: var(--border-radius);
+}
+
+.errorMessage {
+  color: var(--error-color);
+  font-size: var(--normal-text-size);
+}
+
+button {
+  width: 100%;
+  transition: background-color 0.5s;
+  font-size: var(--normal-text-size);
+}
+
+button:hover {
+  transition: background-color 0.5s;
+}
 
 </style>

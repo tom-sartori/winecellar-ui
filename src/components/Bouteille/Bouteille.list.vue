@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="divMain">
     <h3 v-if="listBouteille.length || isLoading">{{ captionText }}</h3>
 
     <div v-show="isLoading" ref="loading" class="progress">
@@ -198,17 +198,19 @@ export default {
 
 button {
   font-size: var(--normal-text-size);
-  margin: 10px;
+  margin: 20px;
 }
 
 table {
   border-collapse: collapse;
   border-radius: var(--border-radius);
   overflow: hidden;
+  font-size: var(--normal-text-size);
 }
 
 thead {
   background-color: var(--clear-color);
+  font-size: var(--thead-text-size);
 }
 
 th, td {

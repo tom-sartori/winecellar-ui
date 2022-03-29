@@ -1,44 +1,42 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
-    <div>
-      <Form @submit="handleRegister" :validation-schema="schema">
-        <div v-if="!content">
-          <div>
-            <label for="username">Username</label>
-            <Field name="username" id="username" type="text"/>
-            <ErrorMessage name="username"/>
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <Field name="email" id="email" type="email"/>
-            <ErrorMessage name="email"/>
-          </div>
-          <div>
-            <label for="firstName">Prénom</label>
-            <Field name="firstName" id="firstName" type="text"/>
-            <ErrorMessage name="firstName"/>
-          </div>
-          <div>
-            <label for="lastName">Nom de famille</label>
-            <Field name="lastName" id="lastName" type="text"/>
-            <ErrorMessage name="lastName"/>
-          </div>
-          <div>
-            <label for="password">Password</label>
-            <Field name="password" id="password" type="password"/>
-            <ErrorMessage name="password"/>
-          </div>
+    <div class="divMain">
+      <Form @submit="handleRegister" :validation-schema="schema" v-if="!content" class="form">
+        <div class="divField">
+          <label for="username">Username</label>
+          <Field name="username" id="username" type="text" class="field"/>
+          <ErrorMessage name="username" class="errorMessage"/>
+        </div>
+        <div class="divField">
+          <label for="email">Email</label>
+          <Field name="email" id="email" type="email" class="field"/>
+          <ErrorMessage name="email" class="errorMessage"/>
+        </div>
+        <div class="divField">
+          <label for="firstName">Prénom</label>
+          <Field name="firstName" id="firstName" type="text" class="field"/>
+          <ErrorMessage name="firstName" class="errorMessage"/>
+        </div>
+        <div class="divField">
+          <label for="lastName">Nom de famille</label>
+          <Field name="lastName" id="lastName" type="text" class="field"/>
+          <ErrorMessage name="lastName" class="errorMessage"/>
+        </div>
+        <div class="divField">
+          <label for="password">Password</label>
+          <Field name="password" id="password" type="password" class="field"/>
+          <ErrorMessage name="password" class="errorMessage"/>
+        </div>
 
-          <div v-show="isLoading" ref="loading" class="progress">
-            <div class="indeterminate"></div>
-          </div>
+        <div v-show="isLoading" ref="loading" class="progress">
+          <div class="indeterminate"></div>
+        </div>
 
-          <div>
-            <button :disabled="isLoading">
-              Créer mon compte
-            </button>
-          </div>
+        <div class="divField">
+          <button :disabled="isLoading">
+            Créer mon compte
+          </button>
         </div>
       </Form>
       <p v-if="content">{{ content }}</p>
@@ -127,5 +125,48 @@ export default {
 </script>
 
 <style scoped>
+
+.form {
+  border: var(--border-green);
+  border-radius: var(--border-radius);
+  padding: 20px
+}
+
+.divField {
+  margin-top: 20px;
+}
+
+label {
+  color: var(--text-color-dark);
+  font-size: var(--thead-text-size);
+}
+
+.field {
+  color: var(--text-color-dark);
+  font-size: var(--normal-text-size);
+  text-align: center;
+}
+
+.field:hover {
+  background-color: var(--hover-color);
+  transition: background-color 0.5s;
+  border-radius: var(--border-radius);
+}
+
+.errorMessage {
+  color: var(--error-color);
+  font-size: var(--normal-text-size);
+}
+
+button {
+  width: 100%;
+  transition: background-color 0.5s;
+  font-size: var(--normal-text-size);
+}
+
+button:hover {
+  transition: background-color 0.5s;
+}
+
 
 </style>

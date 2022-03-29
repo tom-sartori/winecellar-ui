@@ -1,47 +1,63 @@
 <template>
   <div id="app" class="row">
-    <nav class="navbar-fixed">
-      <div class="nav-wrapper">
-        <ul class="left hide-on-med-and-down">
-          <!--  Home page for all users. -->
-          <li>
-            <router-link to="/home">Accueil</router-link>
-          </li>
+    <div class="navbar-fixed">
+      <nav class="nav-center grey" role="navigation">
+        <div class="nav-wrapper container">
+          <ul>
+            <li>
+              <router-link to="/home">
+                <i class="fa-solid fa-house-chimney fa-2xl"></i>
+              </router-link>
+            </li>
 
-          <!--  Cave -->
-          <li v-if="currentUser">
-            <router-link to="/cave">Cave</router-link>
-          </li>
+            <!--  Cave -->
+            <li v-if="currentUser">
+              <router-link to="/cave">
+                <i class="fa-solid fa-wine-glass fa-2xl"></i>
+              </router-link>
+            </li>
 
-          <!--  Bouteille -->
-          <li v-if="currentUser">
-            <router-link to="/bouteille">Bouteille</router-link>
-          </li>
+            <!--  Bouteille -->
+            <li v-if="currentUser">
+              <router-link to="/bouteille">
+                <i class="fa-solid fa-wine-bottle fa-2xl"></i>
+              </router-link>
+            </li>
 
-          <!--  Admin part. -->
-          <li v-if="showAdminBoard">
-            <router-link to="/admin">Administration</router-link>
-          </li>
+            <!--  Admin part. -->
+            <li v-if="showAdminBoard">
+              <router-link to="/admin">
+                <i class="fa-solid fa-user-shield fa-2xl"></i>
+              </router-link>
+            </li>
 
-          <!--  Without connected user. -->
-          <li v-if="!currentUser">
-            <router-link to="/register">Créer un compte</router-link>
-          </li>
-          <li v-if="!currentUser">
-            <router-link to="/login">Se connecter</router-link>
-          </li>
+            <!--  Without connected user. -->
+            <li v-show="!currentUser">
+              <router-link to="/register">
+                <i class="fa-solid fa-user-plus fa-2xl"></i>
+              </router-link>
+            </li>
+            <li v-if="!currentUser">
+              <router-link to="/login">
+                <i class="fa-solid fa-user fa-2xl"></i>
+              </router-link>
+            </li>
 
-          <!--  User connected.  -->
-          <li v-if="currentUser">
-            <router-link to="/profile">Mon profile</router-link>
-          </li>
-          <li v-if="currentUser">
-            <router-link @click.prevent="logOut" to="/home">Deconnexion</router-link>
-          </li>
-
-        </ul>
-      </div>
-    </nav>
+            <!--  User connected.  -->
+            <li v-if="currentUser">
+              <router-link to="/profile">
+                <i class="fa-solid fa-user fa-2xl"></i>
+              </router-link>
+            </li>
+            <li v-if="currentUser">
+              <router-link @click.prevent="logOut" to="/home">
+                <i class="fa-solid fa-right-from-bracket fa-2xl"></i>
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
     <div>
       <router-view class="col s10 offset-s1"/>
     </div>
@@ -76,17 +92,23 @@ export default {
 
 :root {
   --background-color: #ababb3;
-  --text-color-dark: #2c3e50;
-  --text-color-white: white;
-  --dark-color: black;
-  --clear-color: white;
+  --dark-color: #141E27;
+  --clear-color: #F7F7F7;
   --hover-color: grey;
-  --blue: #3532A7;  /* // #646ECB */
-  --blue-1: #00334E;
-  --blue-2: #145374;
-  --blue-3: #5588A3;
+  --green-color: #acece6;
+
+  --background-main-color: #D5D0CD; /* 5588A3 */
+
+  --border-green: 5px solid var(--green-color);
+  --border-dark: 2px solid var(--dark-color);
   --border-radius: 50px;
+
+  --text-color-dark: var(--dark-color);
+  --text-clear-color: var(--clear-color);
+  --error-color: #DA1212;
+
   --normal-text-size: 18px;
+  --thead-text-size: 22px;
 }
 
 
@@ -121,11 +143,51 @@ select:hover {
   background-color: var(--hover-color);
 }
 
+.divMain {
+  background-color: var(--background-main-color);
+  border-radius: var(--border-radius);
+  font-size: var(--normal-text-size);
+  padding: 20px;
+}
 
 </style>
 
 <style scoped>
+
 li {
   list-style: none;
 }
+
+nav {
+  border-bottom: var(--border-green);
+}
+nav.nav-center ul {
+  text-align: center;
+}
+
+nav.nav-center ul li {
+  display: inline;
+  float: none;
+}
+
+nav.nav-center ul li a {
+  display: inline-block;
+}
+
+ul > li {
+  margin-right: 2%;
+  margin-left: 2%;
+}
+
+@media only screen and (max-width: 550px) {
+  ul > li {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .container {
+    margin: 0;
+    width: 100% !important;
+  }
+}
+
 </style>

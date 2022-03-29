@@ -6,49 +6,50 @@
     <Form
         @submit="onSubmit"
         :validation-schema="schema"
+        class="form"
     >
 
-      <div>
-        <label for="nomBouteilleName">Nom : </label>
-        <Field name="nomBouteilleName" id="nomBouteilleName" type="text"/>
-        <ErrorMessage name="nomBouteilleName"/>
+      <div class="divField">
+        <label for="nomBouteilleName">Nom</label>
+        <Field name="nomBouteilleName" id="nomBouteilleName" type="text" class="field"/>
+        <ErrorMessage name="nomBouteilleName" class="errorMessage"/>
       </div>
 
-      <div>
-        <label for="appellationName">Appellation : </label>
-        <Field name="appellationName" id="appellationName" type="text"/>
-        <ErrorMessage name="appellationName"/>
+      <div class="divField">
+        <label for="appellationName">Appellation</label>
+        <Field name="appellationName" id="appellationName" type="text" class="field"/>
+        <ErrorMessage name="appellationName" class="errorMessage"/>
       </div>
 
-      <div>
-        <label for="domaineName">Domaine viticole : </label>
-        <Field name="domaineName" id="domaineName" type="text"/>
-        <ErrorMessage name="domaineName"/>
+      <div class="divField">
+        <label for="domaineName">Domaine viticole</label>
+        <Field name="domaineName" id="domaineName" type="text" class="field"/>
+        <ErrorMessage name="domaineName" class="errorMessage"/>
       </div>
 
-      <div>
-        <label for="millesimeName">Millésime : </label>
-        <Field name="millesimeName" id="millesimeName" type="number" min="0"/>
-        <ErrorMessage name="millesimeName"/>
+      <div class="divField">
+        <label for="millesimeName">Millésime</label>
+        <Field name="millesimeName" id="millesimeName" type="number" min="0" class="field"/>
+        <ErrorMessage name="millesimeName" class="errorMessage"/>
       </div>
 
-      <div>
-        <label for="typeVinName">Type de vin : </label>
-        <Field name="typeVinName" id="typeVinName" type="text"/>
-        <ErrorMessage name="nomBouteilleName"/>
+      <div class="divField">
+        <label for="typeVinName">Type de vin</label>
+        <Field name="typeVinName" id="typeVinName" type="text" class="field"/>
+        <ErrorMessage name="nomBouteilleName" class="errorMessage"/>
       </div>
 
-      <div>
-        <label for="tailleBouteilleName">Taille de la bouteille (en litres) : </label>
-        <Field name="tailleBouteilleName" id="tailleBouteilleName" type="number" value="0.75" min="0"/>
-        <ErrorMessage name="tailleBouteilleName"/>
+      <div class="divField">
+        <label for="tailleBouteilleName">Taille de la bouteille (en litres)</label>
+        <Field name="tailleBouteilleName" id="tailleBouteilleName" type="number" value="0.75" min="0" class="field"/>
+        <ErrorMessage name="tailleBouteilleName" class="errorMessage"/>
       </div>
 
       <div v-show="isLoading" ref="loading" class="progress">
         <div class="indeterminate"></div>
       </div>
 
-      <div>
+      <div class="divField">
         <button @submit="resetForm({ values: {nomBouteilleName: ''}})" :disabled="isLoading">
           Valider
         </button>
@@ -144,3 +145,49 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.form {
+  border: var(--border-dark);
+  border-radius: var(--border-radius);
+  padding: 20px;
+}
+
+.divField {
+  margin-top: 20px;
+}
+
+label {
+  color: var(--text-color-dark);
+  font-size: var(--thead-text-size);
+}
+
+.field {
+  color: var(--text-color-dark);
+  font-size: var(--normal-text-size);
+  text-align: center;
+}
+
+.field:hover {
+  background-color: var(--hover-color);
+  transition: background-color 0.5s;
+  border-radius: var(--border-radius);
+}
+
+.errorMessage {
+  color: var(--error-color);
+  font-size: var(--normal-text-size);
+}
+
+button {
+  width: 100%;
+  transition: background-color 0.5s;
+  font-size: var(--normal-text-size);
+}
+
+button:hover {
+  transition: background-color 0.5s;
+}
+
+</style>

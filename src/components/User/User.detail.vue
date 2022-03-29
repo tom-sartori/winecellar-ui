@@ -1,28 +1,27 @@
 <template>
-  <div v-if="currentUser">
-    <h3>
-      {{ title }}
-    </h3>
+  <div class="divMain">
 
     <div v-show="isLoading" ref="loading" class="progress">
       <div class="indeterminate"></div>
     </div>
 
-    <p>
-      <strong>Email :</strong>
-      {{currentUser.email}}
-    </p>
-    <p>
-      <strong>Nom de famille :</strong>
-      {{currentUser.lastName}}
-    </p>
-    <p>
-      <strong>Prénom :</strong>
-      {{currentUser.firstName}}
-    </p>
-    <p v-if="isAdmin">
-      <strong>Vous êtes administrateur. </strong>
-    </p>
+    <div v-if="currentUser">
+      <p>
+        <strong>Email :</strong>
+        {{currentUser.email}}
+      </p>
+      <p>
+        <strong>Nom de famille :</strong>
+        {{currentUser.lastName}}
+      </p>
+      <p>
+        <strong>Prénom :</strong>
+        {{currentUser.firstName}}
+      </p>
+      <p v-if="isAdmin">
+        <strong>Vous êtes administrateur. </strong>
+      </p>
+    </div>
 
     <p>{{ errorMessage }}</p>
   </div>
@@ -36,7 +35,6 @@ export default {
   name: 'UserDetail',
   data() {
     return {
-      title: 'Mon profile',
       currentUser: null,
       isLoading: true,
       errorMessage: null

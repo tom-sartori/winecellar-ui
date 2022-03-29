@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="divMain">
     <h3>{{ title }}</h3>
 
     <div v-show="isLoading" class="progress">
@@ -77,15 +77,9 @@ export default {
 
 <style scoped>
 
-.main {
-  background-color: var(--blue-3);
-  border-radius: var(--border-radius);
-  padding: 20px;
-}
-
 button {
   font-size: var(--normal-text-size);
-  margin: 10px;
+  margin: 20px;
 }
 
 </style>
