@@ -3,8 +3,6 @@ import App from "./App.vue"
 import router from "./router"
 import store from "./store"
 
-import { JsonWebTokenError as jwt } from 'jsonwebtoken'
-
 import './assets/reset.css';
 import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
@@ -18,6 +16,5 @@ library.add(fas);
 createApp(App)
     .use(router)
     .use(store)
-    .use(jwt)
     .component("font-awesome-icon", FontAwesomeIcon)
     .mount("#app");

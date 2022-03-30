@@ -1,5 +1,6 @@
 import CONSTANTS from '../config/constants'
 import axios from 'axios'
+import encrypt from '../store/crypto'
 const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.UTILISATEUR.AUTHENTICATION
 
 
@@ -8,11 +9,11 @@ class AuthService {
     register(user) {
         return axios
             .post(API_URL + CONSTANTS.ROOT.ACTION.SIGNUP, {
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                password: user.password
+                username: encrypt(user.username),
+                firstName: encrypt(user.firstName),
+                lastName: encrypt(user.lastName),
+                email: encrypt(user.email),
+                password: encrypt(user.password)
             })
     }
 
@@ -20,8 +21,8 @@ class AuthService {
     login(user) {
         return axios
             .post(API_URL + CONSTANTS.ROOT.ACTION.SIGNIN, {
-                username: user.username,
-                password: user.password
+                username: encrypt(user.username),
+                password: encrypt(user.password)
             })
             .then(response => {
                 if (response.data.accessToken) {
