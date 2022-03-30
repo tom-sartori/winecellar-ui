@@ -139,6 +139,7 @@ export default {
         .then( (response) => {
               response.data.forEach( emplacement => {
                 this.listPointPolygon = emplacement.points
+                this.listPointPolygon.sort( (a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
                 this.addPolygon(emplacement.id)
               })
               this.isLoading = false
@@ -330,7 +331,7 @@ export default {
      */
     handlerClickCanvas (event) {
       if (this.isDrawing) {
-        this.listPointPolygon.push(new Point(event.offsetX, event.offsetY))
+        this.listPointPolygon.push(new Point(event.offsetX, event.offsetY, this.listPointPolygon.length))
       }
       else if (this.isDeleting) {
         for (let i = 0; i < this.listPolygon.length; i++) {

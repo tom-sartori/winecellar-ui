@@ -3,8 +3,9 @@
  * Used to draw polygon.
  */
 export default class Point {
-    constructor(x, y) {
+    constructor(x, y, order) {
         this.x = x
         this.y = y
+        this.order = order
     }
 }

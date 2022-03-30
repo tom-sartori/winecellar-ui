@@ -61,7 +61,9 @@ export default {
                     error.toString()
               }
           )
-    },
+    }
+  },
+  computed: {
     isAdmin() {
       for (let role of this.currentUser.roles) {
         if (role.name === 'admin') {

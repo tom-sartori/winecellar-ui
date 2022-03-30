@@ -91,7 +91,7 @@ export default {
 <style>
 
 :root {
-  --background-color: #ababb3;
+  --background-color: #DFDFDE;
   --dark-color: #141E27;
   --clear-color: #F7F7F7;
   --hover-color: grey;

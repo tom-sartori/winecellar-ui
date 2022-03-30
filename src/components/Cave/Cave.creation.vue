@@ -6,10 +6,11 @@
     <Form
         @submit="onSubmit"
         :validation-schema="schema"
+        class="form"
     >
       <label for="caveName"></label>
-      <Field name="caveName" id="caveName" type="text" placeholder="Nom de ma cave"></Field>
-      <ErrorMessage name="caveName"/>
+      <Field name="caveName" id="caveName" type="text" placeholder="Nom de ma cave" class="field"></Field>
+      <ErrorMessage name="caveName" class="errorMessage"/>
 
       <div v-show="isLoading" ref="loading" class="progress">
         <div class="indeterminate"></div>
@@ -78,10 +79,41 @@ export default {
 
 <style scoped>
 
-button {
+.form {
+  border-radius: var(--border-radius);
+  padding: 20px;
+}
+
+label {
+  color: var(--text-color-dark);
+  font-size: var(--thead-text-size);
+}
+
+.field {
+  color: var(--text-color-dark);
   font-size: var(--normal-text-size);
+  text-align: center;
+}
+
+.field:hover {
+  background-color: var(--hover-color);
+  transition: background-color 0.5s;
+  border-radius: var(--border-radius);
+}
+
+.errorMessage {
+  color: var(--error-color);
+  font-size: var(--normal-text-size);
+}
+
+button {
   width: 100%;
-  margin: 10px;
+  transition: background-color 0.5s;
+  font-size: var(--normal-text-size);
+}
+
+button:hover {
+  transition: background-color 0.5s;
 }
 
 </style>
