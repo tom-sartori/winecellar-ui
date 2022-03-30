@@ -179,6 +179,12 @@ ul > li {
   margin-left: 2%;
 }
 
+h1 {
+  font-size: 4.2rem;
+  line-height: 110%;
+  margin: 2.8rem 0 1.68rem 0;
+}
+
 @media only screen and (max-width: 550px) {
   ul > li {
     margin-right: 0;
