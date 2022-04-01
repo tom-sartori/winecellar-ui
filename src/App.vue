@@ -150,6 +150,18 @@ select:hover {
   padding: 20px;
 }
 
+.h1 {
+  font-size: 4.2rem !important; /* Need !mportant because of heroku style */
+  line-height: 110% !important; /* Need !mportant because of heroku style */
+  margin: 2.8rem 0 1.68rem 0 !important;  /* Need !mportant because of heroku style */
+}
+
+.h3 {
+  font-size: 2.92rem !important; /* Need !mportant because of heroku style */
+  line-height: 110% !important; /* Need !mportant because of heroku style */
+  margin: 1.9466666667rem 0 1.168rem 0 !important; /* Need !mportant because of heroku style */
+}
+
 </style>
 
 <style scoped>
@@ -177,18 +189,6 @@ nav.nav-center ul li a {
 ul > li {
   margin-right: 2%;
   margin-left: 2%;
-}
-
-.h1 {
-  font-size: 4.2rem !important; /* Need !mportant because of heroku style */
-  line-height: 110% !important; /* Need !mportant because of heroku style */
-  margin: 2.8rem 0 1.68rem 0 !important;  /* Need !mportant because of heroku style */
-}
-
-.h3 {
-  font-size: 2.92rem !important; /* Need !mportant because of heroku style */
-  line-height: 110% !important; /* Need !mportant because of heroku style */
-  margin: 1.9466666667rem 0 1.168rem 0 !important; /* Need !mportant because of heroku style */
 }
 
 @media only screen and (max-width: 550px) {
