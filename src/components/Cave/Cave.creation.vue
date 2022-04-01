@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <h3>{{ this.title }}</h3>
+    <h3 class="h3">{{ this.title }}</h3>
 
     <Form
         @submit="onSubmit"

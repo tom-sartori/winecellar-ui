@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ title }}</h1>
+    <h1 class="h1">{{ title }}</h1>
     <div class="divMain">
       <Form @submit="handleRegister" :validation-schema="schema" v-if="!content" class="form">
         <div class="divField">

@@ -1,6 +1,6 @@
 <template>
   <div class="divMain">
-    <h3 v-if="listBouteille.length || isLoading">{{ captionText }}</h3>
+    <h3 v-if="listBouteille.length || isLoading" class="h3">{{ captionText }}</h3>
 
     <div v-show="isLoading" ref="loading" class="progress">
       <div class="indeterminate"></div>

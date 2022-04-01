@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <h3>{{ title }}</h3>
+      <h3 class="h3">{{ title }}</h3>
     </header>
 
     <user-list></user-list>

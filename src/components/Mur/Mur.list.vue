@@ -1,6 +1,6 @@
 <template>
   <div v-show="listMur && listMur.length" class="divMain">
-    <h3>{{ title }}</h3>
+    <h3 class="h3">{{ title }}</h3>
 
     <ul>
       <li

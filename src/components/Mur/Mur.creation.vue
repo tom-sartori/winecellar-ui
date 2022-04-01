@@ -1,6 +1,6 @@
 <template>
   <div class="divMain">
-    <h3>{{ title }}</h3>
+    <h3 class="h3">{{ title }}</h3>
 
     <div v-show="isLoading" class="progress">
       <div class="indeterminate"></div>
