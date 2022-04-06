@@ -8,7 +8,7 @@ const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.CAVE.MUR
 class MurService {
 
     getMurImageSrc (imageSrc) {
-        return process.env.VUE_APP_API_URL + CONSTANTS.ROOT.IMAGE.MUR_IMAGE_PATH + '/' + imageSrc
+        return process.env.VUE_APP_CLOUD_URL + imageSrc
     }
 
     getListMur (caveId) {
