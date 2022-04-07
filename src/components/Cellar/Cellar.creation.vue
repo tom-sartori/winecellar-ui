@@ -8,9 +8,9 @@
         :validation-schema="schema"
         class="form"
     >
-      <label for="caveName"></label>
-      <Field name="caveName" id="caveName" type="text" placeholder="Nom de ma cave" class="field"></Field>
-      <ErrorMessage name="caveName" class="errorMessage"/>
+      <label for="cellarName"></label>
+      <Field name="cellarName" id="cellarName" type="text" placeholder="Nom de ma cellar" class="field"></Field>
+      <ErrorMessage name="cellarName" class="errorMessage"/>
 
       <div v-show="isLoading" ref="loading" class="progress">
         <div class="indeterminate"></div>
@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import CaveService from "../../services/Cave.service"
+import CellarService from "../../services/Cellar.service"
 import {ErrorMessage, Field, Form} from "vee-validate"
 import * as yup from "yup"
 
 export default {
-  name: "CaveCreation",
+  name: "CellarCreation",
   components: {
     Form,
     Field,
@@ -41,16 +41,16 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
-      caveName: yup
+      cellarName: yup
           .string()
           .required("")
           .min(2, "2 caractères au minimum. ")
           .max(50, "50 caractères au maximum. "),
     })
     return {
-      title: 'Ajouter une cave',
+      title: 'Ajouter une cellar',
       content: "",
-      newCaveName: "",
+      newCellarName: "",
       isLoading: false,
       schema
     }
@@ -58,11 +58,11 @@ export default {
   methods: {
     onSubmit(values, { resetForm }) {
       this.isLoading = true
-      CaveService.createCave(values.caveName)
+      CellarService.createCellar(values.cellarName)
           .then( () => {
                 resetForm()
                 this.isLoading = false
-                this.$emit('update-isCaveUpdated')  // When a cave is created, the cave list has to be updated.
+                this.$emit('update-isCellarUpdated')  // When a cellar is created, the cellar list has to be updated.
               },
               (error) => {
                 this.isLoading = false

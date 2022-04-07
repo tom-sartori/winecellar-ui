@@ -2,10 +2,10 @@ import axios from 'axios'
 import authHeader from './Auth-header'
 import CONSTANTS from '../config/constants'
 
-const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.UTILISATEUR.UTILISATEUR
+const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.USER.USER
 
 
-class UtilisateurService {
+class UserService {
 
     getListUser() {
         return axios.get(API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL, { headers: authHeader() })
@@ -39,4 +39,4 @@ class UtilisateurService {
     }
 }
 
-export default new UtilisateurService()
+export default new UserService()

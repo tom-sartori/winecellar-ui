@@ -17,19 +17,19 @@
 </template>
 
 <script>
-import MurService from "../../services/Mur.service"
+import WallService from "../../services/Wall.service"
 
 export default {
-  name: "MurCreation",
+  name: "WallCreation",
   props: {
-    caveId: {
+    cellarId: {
       type: String,
       required: true
     }
   },
   data() {
     return {
-      title: 'Ajouter un mur à ma cave',
+      title: 'Ajouter un wall à ma cellar',
       content: "",
       selectedFile: null,
       isLoading: false
@@ -43,13 +43,13 @@ export default {
       this.isLoading = true
       const fd = new FormData()
       fd.append('image', this.selectedFile, this.selectedFile.name)
-      fd.append('caveId', this.caveId)
+      fd.append('cellarId', this.cellarId)
 
-      MurService.createMur(fd)
+      WallService.createWall(fd)
           .then( (response) => {
                 this.content = response.data
                 this.selectedFile = null
-                this.$emit('isMurListUpdated')
+                this.$emit('isWallListUpdated')
                 this.isLoading = false
               },
               (error) => {

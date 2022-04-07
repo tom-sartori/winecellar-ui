@@ -2,17 +2,17 @@ import axios from 'axios'
 import authHeader from './Auth-header'
 import CONSTANTS from '../config/constants'
 
-const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.CAVE.CAVE
+const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.CELLAR.CELLAR
 
 
-class CaveService {
+class CellarService {
 
-    // Need a user token to return his caves.
-    getCave() {
+    // Need a user token to return his cellars.
+    getCellar() {
         return axios.get(API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL, { headers: authHeader() })
     }
 
-    createCave(name) {
+    createCellar(name) {
         return axios.post(API_URL + CONSTANTS.ROOT.ACTION.CREATE,
             { name: name },
             { headers: authHeader() }
@@ -20,4 +20,4 @@ class CaveService {
     }
 }
 
-export default new CaveService()
+export default new CellarService()

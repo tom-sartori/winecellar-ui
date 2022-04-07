@@ -46,14 +46,14 @@
 
 <script>
 
-import UtilisateurService from "../../services/Utilisateur.service"
+import UserService from "../../services/User.service"
 
 
 export default {
   name: "UserList",
   data() {
     return {
-      title: 'Liste des utilisateurs',
+      title: 'Liste des users',
       content: '',
       listUser: [],
       isLoading: true,
@@ -66,7 +66,7 @@ export default {
   methods: {
     fetchListUser() {
       this.isLoading = true
-      UtilisateurService.getListUser()
+      UserService.getListUser()
           .then((response) => {
                 this.isLoading = false
                 this.listUser = response.data
@@ -81,7 +81,7 @@ export default {
           )
     },
     handlerClickButtonDelete(user) {
-      UtilisateurService.deleteUser(user.id, user.username, user.email)
+      UserService.deleteUser(user.id, user.username, user.email)
           .then(() => {
                 this.fetchListUser()
               },
@@ -102,7 +102,7 @@ export default {
       return false
     },
     handlerClickButtonAdmin (user) {
-      UtilisateurService.promoteAdmin(user.id, user.username, user.email)
+      UserService.promoteAdmin(user.id, user.username, user.email)
           .then(() => {
                 this.fetchListUser()
               },

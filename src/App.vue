@@ -10,16 +10,16 @@
               </router-link>
             </li>
 
-            <!--  Cave -->
+            <!--  Cellar -->
             <li v-if="currentUser">
-              <router-link to="/cave">
+              <router-link to="/cellar">
                 <i class="fa-solid fa-wine-glass fa-2xl"></i>
               </router-link>
             </li>
 
-            <!--  Bouteille -->
+            <!--  Bottle -->
             <li v-if="currentUser">
-              <router-link to="/bouteille">
+              <router-link to="/bottle">
                 <i class="fa-solid fa-wine-bottle fa-2xl"></i>
               </router-link>
             </li>

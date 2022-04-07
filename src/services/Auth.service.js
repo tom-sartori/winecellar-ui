@@ -1,7 +1,7 @@
 import CONSTANTS from '../config/constants'
 import axios from 'axios'
 import encrypt from '../store/crypto'
-const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.UTILISATEUR.AUTHENTICATION
+const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.USER.AUTHENTICATION
 
 
 class AuthService {

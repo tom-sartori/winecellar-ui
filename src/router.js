@@ -4,8 +4,8 @@ import LoginView from "@/views/Login.vue"
 import RegisterView from "@/views/Register.vue"
 import ProfileView from "@/views/Profile"
 
-import CaveView from "@/views/Cave.vue"
-import BouteilleView from "@/views/Bouteille"
+import CellarView from "@/views/Cellar.vue"
+import BottleView from "@/views/Bottle"
 import AdminView from "@/views/Admin"
 
 
@@ -22,14 +22,14 @@ const routes = [
         component: HomeView,
     },
     {
-        path: "/cave",
-        name: "cave",
-        component: CaveView,
+        path: "/cellar",
+        name: "cellar",
+        component: CellarView,
     },
     {
-        path: "/bouteille",
-        name: "bouteille",
-        component: BouteilleView,
+        path: "/bottle",
+        name: "bottle",
+        component: BottleView,
     },
     {
         path: "/login",

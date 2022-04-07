@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import UtilisateurService from "../../services/Utilisateur.service"
+import UserService from "../../services/User.service"
 
 
 export default {
@@ -48,7 +48,7 @@ export default {
     fetchUser() {
       this.isLoading = true
       const user = this.$store.state.auth.user
-      UtilisateurService.getUser(user.id)
+      UserService.getUser(user.id)
           .then((response) => {
                 this.currentUser = response.data
                 this.isLoading = false

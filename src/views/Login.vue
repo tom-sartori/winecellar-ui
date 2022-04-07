@@ -69,7 +69,7 @@ export default {
       this.isLoading = true
       this.$store.dispatch("auth/login", user)
           .then(() => {
-                this.$router.push("/cave")
+                this.$router.push("/cellar")
                 this.isLoading = false
               },
               (error) => {

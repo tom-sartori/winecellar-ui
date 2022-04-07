@@ -10,39 +10,39 @@
     >
 
       <div class="divField">
-        <label for="nomBouteilleName">Nom</label>
-        <Field name="nomBouteilleName" id="nomBouteilleName" type="text" class="field"/>
-        <ErrorMessage name="nomBouteilleName" class="errorMessage"/>
+        <label for="bottleNameName">Nom</label>
+        <Field name="bottleNameName" id="bottleNameName" type="text" class="field"/>
+        <ErrorMessage name="bottleNameName" class="errorMessage"/>
       </div>
 
       <div class="divField">
-        <label for="appellationName">Appellation</label>
-        <Field name="appellationName" id="appellationName" type="text" class="field"/>
-        <ErrorMessage name="appellationName" class="errorMessage"/>
+        <label for="designationName">Designation</label>
+        <Field name="designationName" id="designationName" type="text" class="field"/>
+        <ErrorMessage name="designationName" class="errorMessage"/>
       </div>
 
       <div class="divField">
-        <label for="domaineName">Domaine viticole</label>
-        <Field name="domaineName" id="domaineName" type="text" class="field"/>
-        <ErrorMessage name="domaineName" class="errorMessage"/>
+        <label for="vineyardName">Vineyard viticole</label>
+        <Field name="vineyardName" id="vineyardName" type="text" class="field"/>
+        <ErrorMessage name="vineyardName" class="errorMessage"/>
       </div>
 
       <div class="divField">
-        <label for="millesimeName">Millésime</label>
-        <Field name="millesimeName" id="millesimeName" type="number" min="0" class="field"/>
-        <ErrorMessage name="millesimeName" class="errorMessage"/>
+        <label for="vintageName">Millésime</label>
+        <Field name="vintageName" id="vintageName" type="number" min="0" class="field"/>
+        <ErrorMessage name="vintageName" class="errorMessage"/>
       </div>
 
       <div class="divField">
-        <label for="typeVinName">Type de vin</label>
-        <Field name="typeVinName" id="typeVinName" type="text" class="field"/>
-        <ErrorMessage name="nomBouteilleName" class="errorMessage"/>
+        <label for="wineTypeName">Type de vin</label>
+        <Field name="wineTypeName" id="wineTypeName" type="text" class="field"/>
+        <ErrorMessage name="bottleNameName" class="errorMessage"/>
       </div>
 
       <div class="divField">
-        <label for="tailleBouteilleName">Taille de la bouteille (en litres)</label>
-        <Field name="tailleBouteilleName" id="tailleBouteilleName" type="number" value="0.75" min="0" class="field"/>
-        <ErrorMessage name="tailleBouteilleName" class="errorMessage"/>
+        <label for="bottleSizeName">Taille de la bottle (en litres)</label>
+        <Field name="bottleSizeName" id="bottleSizeName" type="number" value="0.75" min="0" class="field"/>
+        <ErrorMessage name="bottleSizeName" class="errorMessage"/>
       </div>
 
       <div v-show="isLoading" ref="loading" class="progress">
@@ -50,7 +50,7 @@
       </div>
 
       <div class="divField">
-        <button @submit="resetForm({ values: {nomBouteilleName: ''}})" :disabled="isLoading">
+        <button @submit="resetForm({ values: {bottleNameName: ''}})" :disabled="isLoading">
           Valider
         </button>
       </div>
@@ -63,51 +63,51 @@
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate"
 import * as yup from "yup"
-import BouteilleService from "../../services/Bouteille.service"
+import BottleService from "../../services/Bottle.service"
 
 
 export default {
-  name: "BouteilleCreation",
+  name: "BottleCreation",
   components: {
     Form,
     Field,
     ErrorMessage,
   },
   props: {
-    emplacementId: {
+    compartmentId: {
       Number,
       required: false
     }
   },
   data() {
     const schema = yup.object().shape({
-      nomBouteilleName: yup
+      bottleNameName: yup
           .string()
           .required("Requis !")
           .min(2, "2 caractères au minimum. ")
           .max(50, "50 caractères au maximum. "),
-      appellationName: yup
+      designationName: yup
           .string()
           .required("Requis !")
           .min(2, "2 caractères au minimum. ")
           .max(50, "50 caractères au maximum. "),
-      domaineName: yup
+      vineyardName: yup
           .string()
           .required("Requis !")
           .min(2, "2 caractères au minimum. ")
           .max(50, "50 caractères au maximum. "),
-      millesimeName: yup
+      vintageName: yup
           .number().integer()
           .typeError()
           .required("Requis !")
           .min(1000, "Millésime minimal : 1000")
           .max(2100, "Millésime maximal : 2100"),
-      typeVinName: yup
+      wineTypeName: yup
           .string()
           .required("Requis !")
           .min(2, "2 caractères au minimum. ")
           .max(50, "50 caractères au maximum. "),
-      tailleBouteilleName: yup
+      bottleSizeName: yup
           .number()
           .typeError()
           .required("Requis ! Indiquez la quantité en litres. ")
@@ -115,7 +115,7 @@ export default {
           .max(50, "50 litres au maximum. "),
     })
     return {
-      title: "Ajouter une bouteille de vin",
+      title: "Ajouter une bottle de vin",
       content: "",
       isLoading: false,
       schema
@@ -124,12 +124,12 @@ export default {
   methods: {
     onSubmit (values, { resetForm }) {
       this.isLoading = true
-      if (this.emplacementId) { // If emplacementId is set, it means that to bottle is added to an emplacement.
-        values['emplacementId'] = this.emplacementId
+      if (this.compartmentId) { // If compartmentId is set, it means that to bottle is added to an compartment.
+        values['compartmentId'] = this.compartmentId
       }
-      BouteilleService.createBouteille(values)
+      BottleService.createBottle(values)
           .then( () => {
-                this.$emit('change-isBouteilleListUpdated') // When a bottle is created, the bottle list has to be updated.
+                this.$emit('change-isBottleListUpdated') // When a bottle is created, the bottle list has to be updated.
                 resetForm()
                 this.isLoading = false
               },

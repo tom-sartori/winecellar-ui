@@ -19,24 +19,24 @@
 </template>
 
 <script>
-import CaveService from "../../services/Cave.service"
+import CellarService from "../../services/Cellar.service"
 
 export default {
-  name: "CaveList",
+  name: "CellarList",
   props: {
-    isCaveUpdated: {
+    isCellarUpdated: {
       Boolean,
       required: true
     }
   },
   watch: {
-    isCaveUpdated() {
-      this.fetchCaveList()  // Trigerred when a cave is added. It means that we need to update the cave list.
+    isCellarUpdated() {
+      this.fetchCellarList()  // Trigerred when a cellar is added. It means that we need to update the cellar list.
     }
   },
   data() {
     return {
-      title: 'Sélectionner une cave',
+      title: 'Sélectionner une cellar',
       content: "",
       loadingText: '',
       options: {},
@@ -44,18 +44,18 @@ export default {
     }
   },
   mounted() {
-    this.fetchCaveList()
+    this.fetchCellarList()
   },
   methods: {
-    fetchCaveList () {
+    fetchCellarList () {
       this.loadingText = 'Chargement...'
-      CaveService.getCave()
+      CellarService.getCellar()
           .then( (response) => {
                 this.options = response.data
-                this.loadingText = '-- Sélectionnez une cave -- '
+                this.loadingText = '-- Sélectionnez une cellar -- '
               },
               (error) => {
-                this.listCave =
+                this.listCellar =
                     (error.response && error.response.data && error.response.data.message) ||
                     error.message ||
                     error.toString()
@@ -65,7 +65,7 @@ export default {
     selectId (event) {
       if(event.target.options.selectedIndex > -1) {
         this.selectedId = event.target.options[event.target.options.selectedIndex].value
-        this.$emit('selected-caveId', event.target.options[event.target.options.selectedIndex].value)
+        this.$emit('selected-cellarId', event.target.options[event.target.options.selectedIndex].value)
       }
     }
   }

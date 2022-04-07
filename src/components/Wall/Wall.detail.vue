@@ -27,21 +27,21 @@
       >Supprimer</button>
     </div>
 
-    <!--    Used to close the emplacement list, to reveal the mur list.-->
-    <button @click="handlerClickButtonClose" v-if="selectedEmplacementId">
+    <!--    Used to close the compartment list, to reveal the wall list.-->
+    <button @click="handlerClickButtonClose" v-if="selectedCompartmentId">
       <i class="fa-solid fa-xmark"></i>
     </button>
-    <bouteille-list
-        :mur-id="murId"
-        :emplacement-id="selectedEmplacementId"
-        :is-bouteille-list-updated="isBouteilleListUpdated"
-    ></bouteille-list>
+    <bottle-list
+        :wall-id="wallId"
+        :compartment-id="selectedCompartmentId"
+        :is-bottle-list-updated="isBottleListUpdated"
+    ></bottle-list>
 
-    <bouteille-creation
-        v-if="selectedEmplacementId"
-        :emplacement-id="selectedEmplacementId"
-        @change-isBouteilleListUpdated="switchIsBouteilleListUpdated"
-    ></bouteille-creation>
+    <bottle-creation
+        v-if="selectedCompartmentId"
+        :compartment-id="selectedCompartmentId"
+        @change-isBottleListUpdated="switchIsBottleListUpdated"
+    ></bottle-creation>
 
     <p>{{ errorResponse }}</p>
   </div>
@@ -50,16 +50,16 @@
 <script>
 import Point from '../../objects/Point'
 import Polygon from '../../objects/Polygon'
-import EmplacementService from "../../services/Emplacement.service"
-import BouteilleList from "@/components/Bouteille/Bouteille.list";
-import BouteilleCreation from "@/components/Bouteille/Bouteille.creation";
+import CompartmentService from "../../services/Compartment.service"
+import BottleList from "@/components/Bottle/Bottle.list";
+import BottleCreation from "@/components/Bottle/Bottle.creation";
 
 
 export default {
-  name: "MurDetail",
-  components: { BouteilleCreation, BouteilleList },
+  name: "WallDetail",
+  components: { BottleCreation, BottleList },
   props: {
-    murId: {
+    wallId: {
       type: Number,
       required: true,
     },
@@ -73,11 +73,11 @@ export default {
       content: '',
       errorResponse: '',
       isInitialised: false,
-      selectedEmplacementId: null,
+      selectedCompartmentId: null,
       isLoading: true,
 
-      // Modified by $emit from bouteille.creation, when the user add a bottle to an emplacement. So the bouteille.list has to be updated.
-      isBouteilleListUpdated: true,
+      // Modified by $emit from bottle.creation, when the user add a bottle to an compartment. So the bottle.list has to be updated.
+      isBottleListUpdated: true,
 
       canvas: null,
       context: null,
@@ -134,13 +134,13 @@ export default {
 
 
     this.isLoading = true
-    // Fetch the list of emplacements for the 'murID' and draw them.
-    EmplacementService.getListEmplacement(this.murId)
+    // Fetch the list of compartments for the 'wallID' and draw them.
+    CompartmentService.getListCompartment(this.wallId)
         .then( (response) => {
-              response.data.forEach( emplacement => {
-                this.listPointPolygon = emplacement.points
+              response.data.forEach( compartment => {
+                this.listPointPolygon = compartment.points
                 this.listPointPolygon.sort( (a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
-                this.addPolygon(emplacement.id)
+                this.addPolygon(compartment.id)
               })
               this.isLoading = false
               this.isInitialised = true
@@ -175,18 +175,18 @@ export default {
      * Create a polygon, show it, add it to the list listPolygon and refresh the canvas.
      * To create the polygon, use the points in the list listPointPolygon.
      */
-    addPolygon(emplacementId) {
+    addPolygon(compartmentId) {
       if (this.listPointPolygon.length >= 3) {  // If the polygon is at least a triangle.
         let polygon = new Polygon(this.listPointPolygon)
         this.showPolygon(polygon)
 
         if (this.isInitialised) {
-          // Send points of the polygon to the api to create a new emplacement.
-          EmplacementService.createEmplacement(this.murId, this.listPointPolygon)
+          // Send points of the polygon to the api to create a new compartment.
+          CompartmentService.createCompartment(this.wallId, this.listPointPolygon)
               .then((response) => {
-                    // Get the emplacementId from the api.
+                    // Get the compartmentId from the api.
                     this.listPolygon.push({
-                      emplacementId: response.data.id,
+                      compartmentId: response.data.id,
                       polygon: polygon
                     })
                     this.listPointPolygon = []
@@ -201,9 +201,9 @@ export default {
               )
         }
         else  {
-          // If not initialised, the emplacementId is in params. It has been gotten by a GET in emplacement.service.
+          // If not initialised, the compartmentId is in params. It has been gotten by a GET in compartment.service.
           this.listPolygon.push({
-            emplacementId: emplacementId,
+            compartmentId: compartmentId,
             polygon: polygon
           })
           this.listPointPolygon = []
@@ -286,7 +286,7 @@ export default {
 
       for (let i = 0; i < this.listPolygon.length; i++) {
         let polygon = this.listPolygon[i].polygon
-        if (this.selectedEmplacementId === this.listPolygon[i].emplacementId) {
+        if (this.selectedCompartmentId === this.listPolygon[i].compartmentId) {
           this.setColor(this.listPolygon[i].polygon.path2d, this.selectedPolygonColor)
         }
         else if (!this.isDrawing && this.context.isPointInPath(polygon.path2d, event.offsetX, event.offsetY)) {
@@ -336,16 +336,16 @@ export default {
       else if (this.isDeleting) {
         for (let i = 0; i < this.listPolygon.length; i++) {
           if (this.context.isPointInPath(this.listPolygon[i].polygon.path2d, event.offsetX, event.offsetY)) {
-            // The emplacement/polygon which the user has just clicked is this.listPolygon[i].
-            // This element contains the emplacementId and the polygon.
+            // The compartment/polygon which the user has just clicked is this.listPolygon[i].
+            // This element contains the compartmentId and the polygon.
 
-            // Delete the emplacement by sending request to the api.
-            EmplacementService.deleteEmplacement(this.listPolygon[i].emplacementId)
+            // Delete the compartment by sending request to the api.
+            CompartmentService.deleteCompartment(this.listPolygon[i].compartmentId)
                 .then((response) => {
                       if (response.status !== 204) {
                         console.log('Not deleted. ')
                       }
-                      this.selectedEmplacementId = null // When we delete the emplacement, we reset this.selectedEmplacementId.
+                      this.selectedCompartmentId = null // When we delete the compartment, we reset this.selectedCompartmentId.
                     },
                     (error) => {
                       this.errorResponse =
@@ -355,7 +355,7 @@ export default {
                     }
                 )
 
-            // Delete the emplacement/polygon on the front.
+            // Delete the compartment/polygon on the front.
             this.listPolygon.splice(i, 1)
             this.refreshCanvas()
             this.handlerClickDeleteButton()  // Switch the delete button.
@@ -363,10 +363,10 @@ export default {
         }
       }
       else {
-        // Not drawing and deleting so, the user is clicking for looking what is inside an emplacement.
+        // Not drawing and deleting so, the user is clicking for looking what is inside an compartment.
         for (let i = 0; i < this.listPolygon.length; i++) {
           if (this.context.isPointInPath(this.listPolygon[i].polygon.path2d, event.offsetX, event.offsetY)) {
-            this.selectedEmplacementId = this.listPolygon[i].emplacementId
+            this.selectedCompartmentId = this.listPolygon[i].compartmentId
             this.refreshCanvas()
             this.setColor(this.listPolygon[i].polygon.path2d, this.selectedPolygonColor)
           }
@@ -387,8 +387,8 @@ export default {
       }
     },
 
-    switchIsBouteilleListUpdated () {
-      this.isBouteilleListUpdated = !this.isBouteilleListUpdated
+    switchIsBottleListUpdated () {
+      this.isBottleListUpdated = !this.isBottleListUpdated
     },
 
 
@@ -436,7 +436,7 @@ export default {
       this.isDeleting = !this.isDeleting;
     },
     handlerClickButtonClose () {
-      this.selectedEmplacementId = null
+      this.selectedCompartmentId = null
       this.refreshCanvas()
     }
   }

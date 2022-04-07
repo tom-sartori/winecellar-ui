@@ -6,20 +6,20 @@ module.exports = {
     ROOT: {
         API: '/api',
         OBJECT: {
-            BOUTEILLE: {
-                BOUTEILLE: '/bouteilles',
-                APPELLATION: '/appellations',
-                DOMAINE: '/domaines',
+            BOTTLE: {
+                BOTTLE: '/bottles',
+                DESIGNATION: '/designations',
+                VINEYARD: '/vineyards',
                 TYPE_VIN: '/type-vin'
             },
-            CAVE: {
-                CAVE: '/caves',
-                MUR: '/murs',
-                EMPLACEMENT: '/emplacements'
+            CELLAR: {
+                CELLAR: '/cellars',
+                WALL: '/walls',
+                COMPARTMENT: '/compartments'
             },
-            UTILISATEUR: {
-                UTILISATEUR: '/utilisateurs',
-                ROLE_UTILISATEUR: '/role-utilisateurs',
+            USER: {
+                USER: '/users',
+                ROLE: '/roles',
                 AUTHENTICATION: '/auth',
                 TEST: '/test'
             }
@@ -38,14 +38,13 @@ module.exports = {
         },
         PARAM: {
             ID: '/id/',
-            NAME: '/name/:name',
-            EMAIL: '/email/:email',
-            CAVE_ID: '/cave-id/:id',
-            EMPLACEMENT_ID: '/emplacement-id/',
-            MUR_ID: '/mur-id/'
+            NAME: '/name/',
+            CELLAR_ID: '/cellar-id/',
+            COMPARTMENT_ID: '/compartment-id/',
+            WALL_ID: '/wall-id/'
         },
         IMAGE: {
-            MUR_IMAGE_PATH: '/mur-image'
+            WALL_IMAGE_PATH: '/wall-image'
         }
     },
     AUTHENTICATION: {

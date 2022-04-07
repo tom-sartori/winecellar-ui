@@ -1,21 +1,21 @@
 <template>
-  <div v-show="listMur && listMur.length" class="divMain">
+  <div v-show="listWall && listWall.length" class="divMain">
     <h3 class="h3">{{ title }}</h3>
 
     <ul>
       <li
-          v-for="(mur) in listMur"
-          :key="mur.id"
-          class="liMurList"
+          v-for="(wall) in listWall"
+          :key="wall.id"
+          class="liWallList"
       >
         <button
-            @click="handlerClickDeleteButton(mur.id)"
-        >Supprimer le mur en dessous</button>
+            @click="handlerClickDeleteButton(wall.id)"
+        >Supprimer le wall en dessous</button>
 
-        <mur-detail
-            :mur-id="mur.id"
-            :src-image="mur.image"
-        ></mur-detail>
+        <wall-detail
+            :wall-id="wall.id"
+            :src-image="wall.image"
+        ></wall-detail>
       </li>
     </ul>
 
@@ -23,46 +23,46 @@
 </template>
 
 <script>
-import MurService from "../../services/Mur.service"
-import MurDetail from "@/components/Mur/Mur.detail";
+import WallService from "../../services/Wall.service"
+import WallDetail from "@/components/Wall/Wall.detail";
 
 export default {
-  name: "MurList",
-  components: {MurDetail},
+  name: "WallList",
+  components: {WallDetail},
   props: {
-    caveId: {
+    cellarId: {
       type: String,
       required: true,
     },
-    isMurListUpdated: {
+    isWallListUpdated: {
       type: Boolean,
       required: true
     }
   },
   watch: {
-    caveId() {
-      this.fetchListMur()
+    cellarId() {
+      this.fetchListWall()
     },
-    isMurListUpdated() {
-      this.fetchListMur()
+    isWallListUpdated() {
+      this.fetchListWall()
     }
   },
   data() {
     return {
-      title: 'Voici les différents murs de ma cave',
-      listMur: null,
+      title: 'Voici les différents walls de ma cellar',
+      listWall: null,
       content: ''
     }
   },
   mounted() {
-    this.fetchListMur()
+    this.fetchListWall()
   },
   methods: {
-    fetchListMur () {
-      MurService.getListMur(this.caveId)
+    fetchListWall () {
+      WallService.getListWall(this.cellarId)
           .then( (response) => {
-                this.listMur = response.data
-                this.listMur.forEach(mur => mur.image = (MurService.getMurImageSrc(mur.image)))
+                this.listWall = response.data
+                this.listWall.forEach(wall => wall.image = (WallService.getWallImageSrc(wall.image)))
               },
               (error) => {
                 this.content =
@@ -72,10 +72,10 @@ export default {
               }
           )
     },
-    handlerClickDeleteButton (murId) {
-      MurService.deleteMur(murId)
+    handlerClickDeleteButton (wallId) {
+      WallService.deleteWall(wallId)
           .then( () => {
-                this.fetchListMur()
+                this.fetchListWall()
               },
               (error) => {
                 this.content =
@@ -91,7 +91,7 @@ export default {
 
 <style>
 
-.liMurList {
+.liWallList {
   border-radius: var(--border-radius);
   border: var(--border-green);
   padding: 20px;
