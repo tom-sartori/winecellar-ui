@@ -24,7 +24,7 @@
           <ErrorMessage name="lastName" class="errorMessage"/>
         </div>
         <div class="divField">
-          <label for="password">Password</label>
+          <label for="password">Mot de passe</label>
           <Field name="password" id="password" type="password" class="field"/>
           <ErrorMessage name="password" class="errorMessage"/>
         </div>

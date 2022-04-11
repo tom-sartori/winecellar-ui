@@ -8,22 +8,32 @@ const API_URL = process.env.VUE_APP_API_URL + CONSTANTS.ROOT.OBJECT.BOTTLE.BOTTL
 class CellarService {
 
     // Need a user token to return his cellars.
-    getListBottle() {
-        return axios.get(API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL, { headers: authHeader() })
+    getListBottle({ order, direction }) {
+        return axios.get(
+            API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL +
+            CONSTANTS.ROOT.PARAM.ORDER + order +
+            CONSTANTS.ROOT.PARAM.DIRECTION + direction
+            , { headers: authHeader() })
     }
 
     // Need a user token to return his cellars.
-    getListBottleByWall(wallId) {
+    getListBottleByWall({ wallId, order, direction }) {
         return axios.get(
-            API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL + CONSTANTS.ROOT.PARAM.WALL_ID + wallId,
-            { headers: authHeader() })
+            API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL +
+            CONSTANTS.ROOT.PARAM.WALL_ID + wallId +
+            CONSTANTS.ROOT.PARAM.ORDER + order +
+            CONSTANTS.ROOT.PARAM.DIRECTION + direction
+            , { headers: authHeader() })
     }
 
     // Need a user token to return his cellars.
-    getListBottleByCompartment(compartmentId) {
+    getListBottleByCompartment({ compartmentId, order, direction }) {
         return axios.get(
-            API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL + CONSTANTS.ROOT.PARAM.COMPARTMENT_ID + compartmentId,
-            { headers: authHeader() })
+            API_URL + CONSTANTS.ROOT.ACTION.FIND_ALL +
+            CONSTANTS.ROOT.PARAM.COMPARTMENT_ID + compartmentId +
+            CONSTANTS.ROOT.PARAM.ORDER + order +
+            CONSTANTS.ROOT.PARAM.DIRECTION + direction
+            , { headers: authHeader() })
     }
 
     // Need a user token to return his cellars.

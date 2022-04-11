@@ -16,7 +16,7 @@ export default {
   components: {BottleList},
   data() {
     return {
-      title: "Mes bottles",
+      title: "Mes bouteilles",
       content: "",
       cellarId: null
     }

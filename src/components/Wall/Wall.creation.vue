@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      title: 'Ajouter un wall à ma cellar',
+      title: 'Ajouter un mur à ma cave',
       content: "",
       selectedFile: null,
       isLoading: false
@@ -65,7 +65,7 @@ export default {
   computed: {
     buttonSelectText () {
       if (this.selectedFile) {
-        return 'Appeyer sur télécharger pour valider'
+        return 'Appuyez sur télécharger pour valider'
       }
       else {
         return 'Choisir une image'

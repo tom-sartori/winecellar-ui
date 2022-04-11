@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      title: 'Sélectionner une cellar',
+      title: 'Sélectionner une cave',
       content: "",
       loadingText: '',
       options: {},
@@ -52,7 +52,7 @@ export default {
       CellarService.getCellar()
           .then( (response) => {
                 this.options = response.data
-                this.loadingText = '-- Sélectionnez une cellar -- '
+                this.loadingText = '-- Sélectionnez une cave -- '
               },
               (error) => {
                 this.listCellar =

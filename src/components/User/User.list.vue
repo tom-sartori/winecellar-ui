@@ -13,7 +13,7 @@
         <th>Username</th>
         <th>Adresse mail</th>
         <th>Nom de famille</th>
-        <th>Prenom</th>
+        <th>Prénom</th>
         <th>Admin</th>
         <th>Action</th>
       </tr>
@@ -53,7 +53,7 @@ export default {
   name: "UserList",
   data() {
     return {
-      title: 'Liste des users',
+      title: 'Liste des utilisateurs',
       content: '',
       listUser: [],
       isLoading: true,

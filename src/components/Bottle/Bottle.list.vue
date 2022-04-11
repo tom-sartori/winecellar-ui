@@ -9,14 +9,14 @@
     <table v-if="listBottle.length" class="striped highlight centered responsive-table">
 <!--      <caption v-text="captionText"></caption>-->
       <thead>
-      <tr>
-        <th>Quantité</th>
-        <th>Nom</th>
-        <th>Designation</th>
-        <th>Vineyard</th>
-        <th>Millésime</th>
-        <th>Type de vin</th>
-        <th>Taille de la bottle</th>
+      <tr @click="handlerOnclickThead">
+        <th abbr="quantity">Quantité</th>
+        <th abbr="name">Nom</th>
+        <th abbr="designation">Appellation</th>
+        <th abbr="vineyard">Domaine viticole</th>
+        <th abbr="vintage">Millésime</th>
+        <th abbr="wineType">Type de vin</th>
+        <th abbr="bottleSize">Taille de la bouteille</th>
         <th v-if="compartmentId">Actions</th>
       </tr>
       </thead>
@@ -86,7 +86,9 @@ export default {
     return {
       listBottle: '',
       errorMessage: '',
-      isLoading: true
+      isLoading: true,
+      currentOrder: 'name',
+      currentDirection: 'ASC'
     }
   },
   mounted() {
@@ -96,23 +98,26 @@ export default {
     fetchListBottle () {
       this.isLoading = true
       let fetchFunction = null
-      let fetchParam = null
+
+      let fetchParam = {}
+      fetchParam.order = this.currentOrder
+      fetchParam.direction = this.currentDirection
 
       // This component displays a list on bottles. This list can be for an compartment, a 'wall' or the full list of an user.
-      // So we set de good function and attrivutes.
+      // So we set de good function and attributes.
       if (this.compartmentId) {
         fetchFunction = BottleService.getListBottleByCompartment
-        fetchParam = this.compartmentId
+        fetchParam.compartmentId = this.compartmentId
       }
       else if (this.wallId) {
         fetchFunction = BottleService.getListBottleByWall
-        fetchParam = this.wallId
+        fetchParam.wallId = this.wallId
       }
       else {
         fetchFunction = BottleService.getListBottle
-        fetchParam = null
       }
 
+      /// FIXME : Need order direction
       // BottleService.getListBottleByCompartment(this.compartmentId)
       fetchFunction(fetchParam)
           .then( (response) => {
@@ -175,16 +180,29 @@ export default {
         return 'delete_forever'
       }
       return 'remove'
+    },
+    handlerOnclickThead (event) {
+      if (event.target.abbr === '') {
+        return
+      }
+      if (this.currentOrder === event.target.abbr) {  // Changing direction
+        this.currentDirection = this.currentDirection === 'ASC' ? 'DESC' : 'ASC'
+      }
+      else {
+        this.currentOrder = event.target.abbr
+        this.currentDirection = 'ASC'
+      }
+      this.fetchListBottle()
     }
   },
   computed: {
     captionText () {
-      let text = "Liste des bottles"
+      let text = "Liste des bouteilles"
       if (this.compartmentId) {
-        return text + " dans l'compartment sélectionné"
+        return text + " dans le compartiment sélectionné"
       }
       else if (this.wallId) {
-        return text + " dans le wall sélectionné"
+        return text + " dans le mur sélectionné"
       }
       else {
         return text
@@ -216,6 +234,10 @@ thead {
 th, td {
   padding: 1em;
   border-bottom: 2px solid white;
+}
+
+th[abbr]:hover {
+  cursor: grab;
 }
 
 </style>

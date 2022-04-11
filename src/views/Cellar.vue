@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      title: "Mes cellars",
+      title: "Mes caves",
       content: "",
       cellarId: null,
       isCellarUpdated: true,    // Used to trigger cellar list when a cellar is created.

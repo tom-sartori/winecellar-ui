@@ -48,7 +48,7 @@ export default {
           .max(50, "50 caractères au maximum. "),
     })
     return {
-      title: 'Ajouter une cellar',
+      title: 'Ajouter une cave',
       content: "",
       newCellarName: "",
       isLoading: false,

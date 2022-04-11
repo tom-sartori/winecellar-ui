@@ -41,7 +41,9 @@ module.exports = {
             NAME: '/name/',
             CELLAR_ID: '/cellar-id/',
             COMPARTMENT_ID: '/compartment-id/',
-            WALL_ID: '/wall-id/'
+            WALL_ID: '/wall-id/',
+            ORDER: '/order/',
+            DIRECTION: '/direction/'
         },
         IMAGE: {
             WALL_IMAGE_PATH: '/wall-image'

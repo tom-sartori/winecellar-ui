@@ -10,7 +10,7 @@
       >
         <button
             @click="handlerClickDeleteButton(wall.id)"
-        >Supprimer le wall en dessous</button>
+        >Supprimer le mur en dessous</button>
 
         <wall-detail
             :wall-id="wall.id"
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      title: 'Voici les différents walls de ma cellar',
+      title: 'Voici les différents murs de ma cave',
       listWall: null,
       content: ''
     }

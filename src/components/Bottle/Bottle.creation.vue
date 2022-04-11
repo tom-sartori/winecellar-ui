@@ -16,13 +16,13 @@
       </div>
 
       <div class="divField">
-        <label for="designationName">Designation</label>
+        <label for="designationName">Appellation</label>
         <Field name="designationName" id="designationName" type="text" class="field"/>
         <ErrorMessage name="designationName" class="errorMessage"/>
       </div>
 
       <div class="divField">
-        <label for="vineyardName">Vineyard viticole</label>
+        <label for="vineyardName">Domaine viticole</label>
         <Field name="vineyardName" id="vineyardName" type="text" class="field"/>
         <ErrorMessage name="vineyardName" class="errorMessage"/>
       </div>
@@ -40,7 +40,7 @@
       </div>
 
       <div class="divField">
-        <label for="bottleSizeName">Taille de la bottle (en litres)</label>
+        <label for="bottleSizeName">Taille de la bouteille (en litres)</label>
         <Field name="bottleSizeName" id="bottleSizeName" type="number" value="0.75" min="0" class="field"/>
         <ErrorMessage name="bottleSizeName" class="errorMessage"/>
       </div>
@@ -115,7 +115,7 @@ export default {
           .max(50, "50 litres au maximum. "),
     })
     return {
-      title: "Ajouter une bottle de vin",
+      title: "Ajouter une bouteille de vin",
       content: "",
       isLoading: false,
       schema
