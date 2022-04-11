@@ -26,12 +26,12 @@
           v-for="bottle in listBottle"
           :key="bottle.id">
         <td>{{ bottle.quantity }}</td>
-        <td>{{ bottle.bottle.bottleName.name }}</td>
-        <td>{{ bottle.bottle.designation.name }}</td>
-        <td>{{ bottle.bottle.vineyard.name }}</td>
-        <td>{{ bottle.bottle.vintage.name }}</td>
-        <td>{{ bottle.bottle.wineType.name }}</td>
-        <td>{{ bottle.bottle.bottleSize.name }}</td>
+        <td>{{ bottle.bottleName.name }}</td>
+        <td>{{ bottle.designation.name }}</td>
+        <td>{{ bottle.vineyard.name }}</td>
+        <td>{{ bottle.vintage.name }}</td>
+        <td>{{ bottle.wineType.name }}</td>
+        <td>{{ bottle.bottleSize.name }}</td>
         <td v-if="compartmentId">
           <!-- Used to remove a bottle from an compartment.-->
           <button @click="handlerClickButtonSub(bottle)" v-if="compartmentId">
