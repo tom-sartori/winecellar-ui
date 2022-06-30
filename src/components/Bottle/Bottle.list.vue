@@ -237,7 +237,7 @@ th, td {
 }
 
 th[abbr]:hover {
-  cursor: grab;
+  cursor: pointer;
 }
 
 </style>
